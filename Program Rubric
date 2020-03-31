@@ -1,0 +1,55 @@
+Program grading rubric
+Complete and correct program - 50%
+
+To earn full credit, students must meet all of the objectives in the program specifications.
+
+Score
+Level 1: Most of the program has been implemented, but does not compile correctly:	20
+Level 2: The program compiles correctly, but crashes during basic testing:	25
+Level 3: The program runs, but fails to meet several of the specifications:	30
+Level 4: The program runs, but fails to meet 2-3 specifications	35
+Level 5: The program runs, but fails to meet a specification or makes major errors	40
+Level 6: The program runs, but makes a major error or crashes during stress testing	45
+Level 7: The program runs, but makes a minor error handling one case:	48
+Level 8: The program is complete and performs all operations correctly:	50
+ 
+
+Good programming practices - 30%
+
+To earn full credit, students must write code with following properties:
+
+Object-oriented: Objects should be self-contained with private data hidden. Methods should be public only when necessary. Do not circumvent information hiding by allowing operations that return internal, implementation-dependent data (e.g., pointers or reference to data members) unless appropriate.
+Efficient (time and memory): While small code optimizations are not important (and often counter-productive), the use of an efficient algorithm is crucial.
+Modular: Each function should perform a single well-defined operation. If a function performs two tasks, break it into two functions. If a function (including main) performs a series of steps, each step should be a function.
+Fail-safe: Do not allow users to access invalid data or crash the program, except where noted in specifications.
+Miscellaneous: Use const member functions whenever possible. When passing by reference, use const whenever possible. Do not use global variables. Global constants are acceptable. Eliminate memory leaks. Eliminate compiler warnings when possible. Write portable code (i.e. don’t make assumptions about the compiler.) Use constants instead of "magic numbers" in your code.
+Score
+Level 1: The code adheres to at least of the standards:	15
+Level 2: The code adheres to three of the above standards:	20
+Level 3: The code is good, but could use improvement in at least one area:	25
+Level 4: The code is well-written and adheres to all of the above standards:	30
+ 
+
+Easy to understand (documentation) - 25%
+
+To earn full credit, students must write code that is easy to understand by:
+
+Describing the contents of each file at the beginning of the file. Describe the purpose of each class (or other code), the functionality, and any assumptions made. Give the author and a brief description of code use.
+Documenting the purpose, pre-conditions and post-conditions for each function (including main). Make sure the input and output (parameters) are clear. Documentation should be included at both declaration and definition.
+Documenting each logical code block within each function when performing non-obvious operations.
+Using indentation appropriately and consistently to delineate code blocks.
+Using meaningful function and variables names.
+Grouping similar or related functions together.
+Placing different classes in separate files and naming class files with the same name as the class (e.g., Student.h, Student.cpp or student.h, student.cpp).
+Using appropriate white space between functions and logical code blocks.
+Using white space within lines of code. Operators such as = and + should have a space on either side. In for statements use spaces between expressions.
+Writing lines of code with reasonable length (scrolling from side-to-side should not be necessary to view a line of code). Break long lines into shorter lines when possible.
+Using correct spelling, grammar, and punctuation.
+Score
+Level 1: Documentation is present, but does not consistently adhere to the standards:	10
+Level 2: Documentation is somewhat understandable, but needs improvement in areas:	14
+Level 3: Documentation is understandable, but could be improved in at least one area:	17
+Level 4: Documentation is very understandable and adheres to all of the above standards:	20
+ 
+
+(Note that grades can and will be given in between the levels noted above in each area.)
