@@ -122,6 +122,26 @@ bool Binary::toggleBit(int n){
     return true;
 }
 
+//OPERATORS
+
+//add two binary numbers or bools
+Binary Binary::operator+(const Binary& right) const{
+    Binary temp = *this;  //temp of this object
+    Binary tempRight = right; //temp of added
+//********************CONVERSION TO INT****************************//
+    int num = temp.toDecimal();
+    cout << "Num: " << num  << endl;
+    int rightNum = tempRight.toDecimal();
+    cout << "rightNum: " << rightNum << endl;
+//*****************************************************************//
+    int newNum = num + rightNum;
+    Binary result(newNum);
+    cout << "Sum: " << newNum << endl;
+    return result;
+}
+
+
+
 
 //out
 //Output the binary number with no spaces. Use a preceding "-" if it is negative. Do not output leading zeros. Do not output endl.
@@ -134,4 +154,17 @@ ostream& operator<<(ostream& output, const Binary& a){
         }
     }
     return output;
+}
+
+//turns binary to decimal and returns decimal
+int Binary::toDecimal(){
+    int power = 1, decimalNum = 0, count = 1;
+    for(int i = (this->size -1) ; i >= 0; i--){ //start from lsn
+        if(count != 1) {
+            power *= 2;
+        }
+        decimalNum += this->bits[i] * power;
+        count++;
+    }
+    return decimalNum;
 }
