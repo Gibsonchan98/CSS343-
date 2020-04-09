@@ -36,8 +36,8 @@ int Binary::count = 0;
 // Postconditions:  array bits is initialized with a size of 1
 //        element of array is set to 0/false
 //        count is incremented.
-Binary::Binary(){
-    this-> size = 1;
+Binary::Binary() {
+    this->size = 1;
     //allocate array with size 1
     bits = new bool[size];
     count++;
@@ -52,13 +52,13 @@ Binary::Binary(){
 //         int has been converted and elements are saved as 0 or 1 (false/true)
 //         count is incremented.
 //         Negative input values turn sign to true
-Binary::Binary(int num){
-   if (num == 0) {
-        this->sign = false; 
-        this->size = 1; 
+Binary::Binary(int num) {
+    if (num == 0) {
+        this->sign = false;
+        this->size = 1;
         bits = new bool[size];
         bits[0] = false;
-      //  cout << bits[0] << endl; 
+        //  cout << bits[0] << endl; 
     }
     else {
         toBinary(num);
@@ -71,11 +71,11 @@ Binary::Binary(int num){
 // Copy constructor for class Array
 // Preconditions:   other.bits points to an array of size at least other.size
 // Postconditions:  other is copied into *this, count is incremented
-Binary::Binary(const Binary& other){
+Binary::Binary(const Binary& other) {
     this->sign = other.sign;
     this->size = other.size;
     bits = new bool[size];
-    for(int i = 0; i < size; i++){
+    for (int i = 0; i < size; i++) {
         this->bits[i] = other.bits[i];
     }
 }
@@ -84,7 +84,7 @@ Binary::Binary(const Binary& other){
 // Destructor for class Binary
 // Preconditions:   bits points to memory on the heap
 // Postconditions:  Binary for bits is deallocated, count is decremented
-Binary::~Binary(){
+Binary::~Binary() {
     delete[] bits;
     count--;
 }
@@ -95,12 +95,12 @@ Binary::~Binary(){
 // Preconditions:   bits is not nullptr and n is not out of range
 // Postconditions:  Returns bool value of bit at n
 //            Returns false if n is out of range
-bool Binary::getBit(int n){
-    if(n < 0 || n >= size){
+bool Binary::getBit(int n) {
+    if (n < 0 || n >= size) {
         return false; //FOR NOW
     }
     //location int
-    int loc = this->size - (n+1);
+    int loc = this->size - (n + 1);
     return this->bits[loc];
 }
 
@@ -112,12 +112,12 @@ bool Binary::getBit(int n){
 // Postconditions:  Returns true if change is successful.
 //            Returns false if n is out of range
 //            Changes bit at n to 1.
-bool Binary::setBit(int n){
+bool Binary::setBit(int n) {
     //CANNOT TAKE N THAT IS LARGER THAN SIXE
-    if(n < 0 || n >= size){
+    if (n < 0 || n >= size) {
         return false;
     }
-    int loc = this->size - (n+1);
+    int loc = this->size - (n + 1);
     return this->bits[loc] = true; //MAYBE SEPERATE THE RETURN
 }
 
@@ -127,12 +127,12 @@ bool Binary::setBit(int n){
 // Postconditions:  Returns true if change is successful.
 //            Returns false if n is out of range
 //            Changes bit at n to 0.
-bool Binary::clearBit(int n){
+bool Binary::clearBit(int n) {
     //CANNOT TAKE N THAT IS LARGER THAN SIXE
-    if(n < 0 || n >= size){
+    if (n < 0 || n >= size) {
         return false;
     }
-    int loc = this->size - (n+1);
+    int loc = this->size - (n + 1);
     return this->bits[loc] = false; //MAYBE SEPERATE THE RETURN
 }
 
@@ -143,12 +143,12 @@ bool Binary::clearBit(int n){
 //            Returns false if n is out of range
 //            if bit is 0, it is changed to 1
 //            if bit is 1, it is changed to 0
-bool Binary::toggleBit(int n){
-    if(n < 0 || n >= size){
+bool Binary::toggleBit(int n) {
+    if (n < 0 || n >= size) {
         return false;
     }
-    int loc = this->size - (n+1);
-    bits[loc] = (bits[loc] == 0) ? 1: 0;
+    int loc = this->size - (n + 1);
+    bits[loc] = (bits[loc] == 0) ? 1 : 0;
     //if(bits[loc] == 0){bits[loc] = 1;}
     //bits[loc] = 0;
     return true;
@@ -160,9 +160,9 @@ bool Binary::toggleBit(int n){
 // Overloaded assignment operator
 // Preconditions:   right.bits points to an array of size at least right.size
 // Postconditions:  *this is assigned the same binary number as right
-const Binary& Binary::operator=(const Binary& right){
+const Binary& Binary::operator=(const Binary& right) {
     //check if they are already the same
-    if(right == *this){
+    if (right == *this) {
         return *this;
     }
     //must delete everything and rewrite
@@ -171,7 +171,7 @@ const Binary& Binary::operator=(const Binary& right){
     this->size = right.size;
     bits = new bool[size];
     //copy all elements
-    for(int i = 0; i < size; i++){
+    for (int i = 0; i < size; i++) {
         this->bits[i] = right.bits[i];
     }
     return *this;
@@ -183,18 +183,18 @@ const Binary& Binary::operator=(const Binary& right){
 //          size and right.size, respectively
 // Postconditions:  true is returned if the binary objects have the same size
 //          and elements false is return otherwise
-bool Binary::operator==(const Binary& right) const{
+bool Binary::operator==(const Binary& right) const {
     bool result = false;
-    if(this->size != right.size || this->sign != right.sign ){
+    if (this->size != right.size || this->sign != right.sign) {
         return false;
     }
 
     //if first element is not same then they are not equal
-    if(bits[0] != right.bits[0]){
+    if (bits[0] != right.bits[0]) {
         return false;
     }
 
-    for(int i = 0; i < size; i++){
+    for (int i = 0; i < size; i++) {
         result = bits[i] == right.bits[i];
     }
     return result;
@@ -206,13 +206,13 @@ bool Binary::operator==(const Binary& right) const{
 //          size and right.size, respectively
 // Postconditions:  false is returned if the binary objects have the same size
 //          and elements true is return otherwise
-bool Binary::operator!=(const Binary& right) const{
+bool Binary::operator!=(const Binary& right) const {
     bool result = false;
-    if(this->size != right.size || this->sign != right.sign){
+    if (this->size != right.size || this->sign != right.sign) {
         return true;
     }
 
-    for(int i = 0; i < size; i++){
+    for (int i = 0; i < size; i++) {
         result = bits[i] != right.bits[i];
     }
     return result;
@@ -224,13 +224,13 @@ bool Binary::operator!=(const Binary& right) const{
 // Postconditions:  Returns by value resulting Binary
 //              Negative binary nums are handled like negative.
 //              Returned value is the absolute value of Binary.
-Binary Binary::operator+(const Binary& right) const{
+Binary Binary::operator+(const Binary& right) const {
     Binary temp = *this;  //temp of this object
     Binary tempRight = right; //temp of added
     int num = temp.toDecimal();
     int rightNum = tempRight.toDecimal();
-    if(tempRight.sign){ rightNum *= -1;} // if negative then change num
-    if(temp.sign){ num *= -1;}
+    if (tempRight.sign) { rightNum *= -1; } // if negative then change num
+    if (temp.sign) { num *= -1; }
     int newNum = num + rightNum;
     Binary result(newNum);
     return result;
@@ -243,13 +243,13 @@ Binary Binary::operator+(const Binary& right) const{
 // Postconditions:  Returns by value resulting Binary of subtraction.
 //              Negative binary nums are handled like negative numbers.
 //              Returned value is the absolute value of Binary.
-Binary Binary::operator-(const Binary& right) const{
+Binary Binary::operator-(const Binary& right) const {
     Binary temp = *this;  //temp of this object
     Binary tempRight = right; //temp of added
     int num = temp.toDecimal();
     int rightNum = tempRight.toDecimal();
-    if(tempRight.sign){ rightNum *= -1;} // if negative then change num
-    if(temp.sign){ num *= -1;}
+    if (tempRight.sign) { rightNum *= -1; } // if negative then change num
+    if (temp.sign) { num *= -1; }
     int newNum = num - rightNum;
     Binary result(newNum);
     return result;
@@ -262,7 +262,7 @@ Binary Binary::operator-(const Binary& right) const{
 // Postconditions:   Returns resulting Binary of addition.
 //             Negative binary nums are handled like negative numbers.
 //             Returned value is the absolute value of Binary.
-Binary Binary::operator+=(const Binary& right){
+Binary Binary::operator+=(const Binary& right) {
     //Binary temp = *this + right;
     *this = *this + right;
     return *this;
@@ -274,7 +274,7 @@ Binary Binary::operator+=(const Binary& right){
 // Postconditions:   Returns resulting Binary of subtraction.
 //             Negative binary nums are handled like negative numbers.
 //             Returned value is the absolute value of Binary.
-Binary Binary::operator-=(const Binary& right){
+Binary Binary::operator-=(const Binary& right) {
     *this = *this - right;
     return *this;
 }
@@ -287,7 +287,7 @@ Binary Binary::operator-=(const Binary& right){
 // Postconditions:  If sign is negative then it is sent to output.
 //            Bits elements are sent one by one to output istream with no
 //            spaces between them or leading 0s.
-ostream& operator<<(ostream& output, const Binary& a){
+ostream& operator<<(ostream& output, const Binary& a) {
     int tracker = 0; //used to see where to start displaying
     if (a.sign) {
         output << "-";
@@ -318,17 +318,17 @@ ostream& operator<<(ostream& output, const Binary& a){
 // Preconditions:   a.bits must point to an array with size at least a.size
 // Postconditions:  Input is converted to binary form and save in bool array.
 //              New Binary object is created with inputted value.
-istream& operator>>(istream& input, Binary& a){
+istream& operator>>(istream& input, Binary& a) {
     int temp; //storge for input 
     input >> temp;
     if (temp == 0) {
-        a.sign = false; 
-        a.size = 1; 
-        a.bits = new bool[a.size]; 
-        a.bits[0] = false; 
+        a.sign = false;
+        a.size = 1;
+        a.bits = new bool[a.size];
+        a.bits[0] = false;
     }
     else { a.toBinary(temp); }
-    
+
     return input;
 }
 
@@ -339,10 +339,10 @@ istream& operator>>(istream& input, Binary& a){
 // Preconditions:  bits must not be null
 // Postconditions:  Returns the conversion of binary number
 //           It is the absolute of the binary number
-int Binary::toDecimal(){
+int Binary::toDecimal() {
     int power = 1, decimalNum = 0, c = 1;
-    for(int i = (this->size - 1) ; i >= 0; i--){ //start from lsn
-        if(c != 1) {
+    for (int i = (this->size - 1); i >= 0; i--) { //start from lsn
+        if (c != 1) {
             power *= 2;
         }
         decimalNum += this->bits[i] * power;
@@ -356,29 +356,30 @@ int Binary::toDecimal(){
 // Preconditions:  none
 // Postconditions:  Populates the array with bool values
 //             Handles negative value and turns sign to true
-void Binary::toBinary(int num){
+void Binary::toBinary(int num) {
     int temp = 0, a = 0, b = 0;
     //check if negative
-    if(num < 0){
+    if (num < 0) {
         num = num * -1;
         this->sign = true;
     }
+    this->sign = false;
     //create temp stack
-    stack<bool> tempVector;
+    stack<bool> tempStack;
     //conversion
-    for(int i = num; i > 0; i = i/2){
-        temp = num%2;
-        tempVector.push(temp);
-        num = num/2;
+    for (int i = num; i > 0; i = i / 2) {
+        temp = num % 2;
+        tempStack.push(temp);
+        num = num / 2;
         a++;
         // cout << "Num " << a << ": " << temp << endl;
     }
-    this->size = tempVector.size();
+    this->size = tempStack.size();
     bits = new bool[this->size];
-    while(!tempVector.empty()){
-        bits[b] = tempVector.top();
+    while (!tempStack.empty()) {
+        bits[b] = tempStack.top();
         //cout << "Front Num " << b << ": " << tempVector.top()<< endl;
-        tempVector.pop();
+        tempStack.pop();
         b++;
     }
 
