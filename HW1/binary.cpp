@@ -38,6 +38,7 @@ int Binary::count = 0;
 //        count is incremented.
 Binary::Binary() {
     this->size = 1;
+    this->sign = false;
     //allocate array with size 1
     bits = new bool[size];
     count++;
@@ -58,7 +59,6 @@ Binary::Binary(int num) {
         this->size = 1;
         bits = new bool[size];
         bits[0] = false;
-        //  cout << bits[0] << endl; 
     }
     else {
         toBinary(num);
@@ -321,13 +321,8 @@ ostream& operator<<(ostream& output, const Binary& a) {
 istream& operator>>(istream& input, Binary& a) {
     int temp; //storge for input 
     input >> temp;
-    if (temp == 0) {
-        a.sign = false;
-        a.size = 1;
-        a.bits = new bool[a.size];
-        a.bits[0] = false;
-    }
-    else { a.toBinary(temp); }
+    Binary b(temp);
+    a = b;
 
     return input;
 }
@@ -358,12 +353,12 @@ int Binary::toDecimal() {
 //             Handles negative value and turns sign to true
 void Binary::toBinary(int num) {
     int temp = 0, a = 0, b = 0;
+    this->sign = false;
     //check if negative
     if (num < 0) {
         num = num * -1;
         this->sign = true;
     }
-    this->sign = false;
     //create temp stack
     stack<bool> tempStack;
     //conversion
@@ -375,9 +370,9 @@ void Binary::toBinary(int num) {
         // cout << "Num " << a << ": " << temp << endl;
     }
     this->size = tempStack.size();
-    bits = new bool[this->size];
+    this->bits = new bool[this->size];
     while (!tempStack.empty()) {
-        bits[b] = tempStack.top();
+        this->bits[b] = tempStack.top();
         //cout << "Front Num " << b << ": " << tempVector.top()<< endl;
         tempStack.pop();
         b++;
