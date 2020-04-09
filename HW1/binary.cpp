@@ -53,7 +53,17 @@ Binary::Binary(){
 //         count is incremented.
 //         Negative input values turn sign to true
 Binary::Binary(int num){
-    toBinary(num);
+   if (num == 0) {
+        this->sign = false; 
+        this->size = 1; 
+        bits = new bool[size];
+        bits[0] = false;
+      //  cout << bits[0] << endl; 
+    }
+    else {
+        toBinary(num);
+    }
+
     count++;
 }
 
@@ -279,19 +289,25 @@ Binary Binary::operator-=(const Binary& right){
 //            spaces between them or leading 0s.
 ostream& operator<<(ostream& output, const Binary& a){
     int tracker = 0; //used to see where to start displaying
-    if(a.sign){
+    if (a.sign) {
         output << "-";
     }
-    for(int i = 0; i < a.size; i++){
-        if(a.bits[i] != 0){
-            break;
+
+    if (a.size > 1) {
+        for (int i = 0; i < a.size; i++) {
+            if (a.bits[i] != 0) {
+                break;
+            }
+            tracker++;
         }
-        tracker++;
+        for (int i = tracker; i < a.size; i++) {
+            output << a.bits[i] << "";
+        }
+    }
+    else {
+        output << a.bits[0];
     }
 
-    for(int i = tracker; i < a.size; i++){
-        output << a.bits[i] << "" ;
-    }
     return output;
 }
 
@@ -303,9 +319,16 @@ ostream& operator<<(ostream& output, const Binary& a){
 // Postconditions:  Input is converted to binary form and save in bool array.
 //              New Binary object is created with inputted value.
 istream& operator>>(istream& input, Binary& a){
-    int temp; //storge for input
+    int temp; //storge for input 
     input >> temp;
-    a.toBinary(temp);
+    if (temp == 0) {
+        a.sign = false; 
+        a.size = 1; 
+        a.bits = new bool[a.size]; 
+        a.bits[0] = false; 
+    }
+    else { a.toBinary(temp); }
+    
     return input;
 }
 
