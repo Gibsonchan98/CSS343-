@@ -27,7 +27,7 @@
 
 using namespace std;
 
-class Binary{
+class Binary {
 
     //-----------------------------  <<  ----------------------------------------
     // Overloaded output operator for class Binary; outputs binary number
