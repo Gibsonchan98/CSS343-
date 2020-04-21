@@ -6,8 +6,6 @@
 
 #include <string>
 #include <iostream>
-#include <ctype.h>
-#include <stdio.h>
 
 using namespace std;
 
@@ -35,9 +33,9 @@ SearchTree::~SearchTree(){
 //***************** Overloaded Operators ******************************
 const SearchTree& SearchTree::operator=(const SearchTree& right){
     //if they are the same then return this
-    if(right != *this){
+    if(right != *this) {
         //delete everything on tree
-        //this->makeEmpty();
+        this->makeEmpty();
         copyHelper(right.root, this->root);
     }
     return *this;
@@ -77,6 +75,8 @@ bool SearchTree::insert(Comparable* newItem){
         this->root = new Node;
         this->Nodenums++;
         this->root->dataPtr = newItem; //copy address so it points to same data
+        this->root->rightPtr = this->root->leftPtr = nullptr;
+        root->frequency = 1;
         return true;
     }
     return insertHelper(this->root, newItem);
@@ -85,17 +85,54 @@ bool SearchTree::insert(Comparable* newItem){
 //removes one occurrence of a Comparable from the tree. If it is the last occurrence,
 // remove the node. Return false if the Comparable is not found.
 bool SearchTree::remove(const Comparable& item){
-    if(*this->root->dataPtr == item){
-        if(this->root->frequency == 1 ) {
-            this->root->frequency--;
-            if (this->root->rightPtr != nullptr || this->root->leftPtr != nullptr) {
-                //create recursive for remove
-            }
-            this->root->dataPtr == nullptr;
+    if(this->root == nullptr){
+        return false;
+    }
+   return deleteNode(this->root, item);
+}
 
+bool SearchTree::deleteNode(Node*& curr, const Comparable &item) {
+    //base case
+    if(*curr->dataPtr == item){
+        if(curr->frequency == 1){
+            curr->dataPtr = nullptr;
+            if(curr->leftPtr == nullptr || curr->rightPtr == nullptr){
+                Node* temp = curr;
+                curr = curr->leftPtr == nullptr? curr->rightPtr : curr->leftPtr;
+                delete temp;
+                Nodenums--;
+                return true;
+            }
+            else{
+                curr->dataPtr = deleteLeft(curr);
+                return true;
+            }
+        } else if(curr->frequency > 1){
+            curr->frequency--;
+            return true;
         }
     }
+    if(*this->root->dataPtr < item){
+        return deleteNode(curr->rightPtr,item);
+    }
+    if(*this->root->dataPtr < item){
+        return deleteNode(curr->rightPtr,item);
+    }
     return false;
+}
+
+Comparable* SearchTree::deleteLeft(Node *&curr) {
+    if(curr->leftPtr == nullptr){
+        Comparable* item = curr->dataPtr;
+        Node* temp = curr;
+        curr = curr->rightPtr;
+        delete temp;
+        Nodenums--;
+        return item;
+    }
+    else{
+        return deleteLeft(curr->leftPtr);
+    }
 }
 
 //removes and deallocates all of the data from the tree.
@@ -128,7 +165,25 @@ const Comparable* SearchTree::retrieve(const Comparable& item) const{
 
 // returns the height of the node storing the Comparable in the tree.
 // A leaf has height 0. Return -1 if the Comparable is not found.
-int SearchTree::height(const Comparable& comp) const{}
+int SearchTree::height(const Comparable& item) const{
+    //check if empty
+    if(this->root == nullptr){
+        return -1;
+    }
+    if(*this->root->dataPtr == item){
+       return heightRecursiveHelper(this->root, item);
+    }
+    else{
+        return heightRecursiveHelper(this->root->leftPtr,item);
+
+
+    }
+    return -1;
+}
+
+int SearchTree::heightRecursiveHelper(Node *curr,const Comparable& item) const{
+    return -1;
+}
 
 //******************************************************************************
 
@@ -146,9 +201,12 @@ bool SearchTree::insertHelper(Node *curr, Comparable *newItem) {
             Node *newNode = new Node;
             newNode->dataPtr = newItem;
             curr->leftPtr = newNode;
+            curr->leftPtr->frequency++;
             Nodenums++;
+         //   cout << "Here in insert leftnullptr" << endl;
             return true;
         }
+      //  cout << "Here in insert less than" << endl;
         return insertHelper(curr->leftPtr,newItem);
     }
     if(*newItem > *curr->dataPtr){
@@ -156,11 +214,13 @@ bool SearchTree::insertHelper(Node *curr, Comparable *newItem) {
             Node *newNode = new Node;
             newNode->dataPtr = newItem;
             curr->rightPtr = newNode;
+            curr->rightPtr->frequency++;
             Nodenums++;
             return true;
         }
         return insertHelper(curr->rightPtr,newItem);
     }
+    return false;
 }
 
 //check if tree is empty
@@ -177,8 +237,9 @@ void SearchTree::copyHelper(Node* otherRoot, Node* &thisRoot){
     else{
         //Preorder copying
         thisRoot = new Node(); //initialize root
-        this->Nodenums++; //increase num everytime a Node is created
+        thisRoot->dataPtr = new Comparable;
         *thisRoot->dataPtr = *otherRoot->dataPtr; //copies values of data
+        thisRoot->frequency = otherRoot->frequency;
         copyHelper(otherRoot->leftPtr, thisRoot->leftPtr);
         copyHelper(otherRoot->rightPtr, thisRoot->rightPtr);
     }
@@ -186,16 +247,21 @@ void SearchTree::copyHelper(Node* otherRoot, Node* &thisRoot){
 
 //comparing method helper
 bool SearchTree::comparingHelper(Node* otherRoot,Node* thisRoot) const {
+
     //check if they are empty
     if(otherRoot == nullptr && thisRoot == nullptr){
         return true;
     }
-    if ((otherRoot != nullptr && thisRoot == nullptr) ||
-            (otherRoot == nullptr && thisRoot != nullptr)){
+    if (otherRoot == nullptr || thisRoot == nullptr){
         return false;
     }
+
     //check if data in comparable is the same
     if(*otherRoot->dataPtr != *thisRoot->dataPtr){
+        return false;
+    }
+
+    if( otherRoot->frequency != thisRoot->frequency){
         return false;
     }
 
@@ -204,7 +270,7 @@ bool SearchTree::comparingHelper(Node* otherRoot,Node* thisRoot) const {
 
 }
 
-//helpr retrieve Comprable pointer
+//helper retrieve Comprable pointer
 const Comparable* SearchTree::retrieveHelper(Node *curr, const Comparable &item) const{
     if(curr != nullptr){
         //base case
@@ -236,23 +302,21 @@ ostream& SearchTree::displaying(ostream &output, Node* curr) {
 //display helper
 void SearchTree::displayHelper(ostream &output,Node *curr) {
     if(curr != nullptr){
-        displaying(output,curr->leftPtr);
-        output << *curr->dataPtr << " "  << curr->frequency;
-        displaying(output,curr->rightPtr);
+        displayHelper(output,curr->leftPtr);
+        output << *curr->dataPtr << " "  << curr->frequency << endl;
+        displayHelper(output,curr->rightPtr);
     }
 }
 //*********************************************************************
 
-//output the frequency table in sorted order.
-// This should be an inorder traversal of your tree. Your output should look similar to:. 1
-//a 3
-//e 1
-//f 1
-//h 7
-//...
+
  ostream& operator<<(ostream& output, const SearchTree& st){
-    //st.displayHelper(output,st.root);
+    output << "Number of Nodes: " << st.Nodenums << endl;
+    st.displayHelper(output,st.root);
     //output << endl;
     //return output;
-    return st.displaying(output,st.root);
+    //return st.displaying(output,st.root);
+   // output << *st.root->dataPtr << " " << st.root->frequency << endl;
+
+    return output;
 }

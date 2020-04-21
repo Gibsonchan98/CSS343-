@@ -20,25 +20,58 @@ int main() {
     cout << "Result of a > b: " << test << endl;
     test = a == c;
     cout << "Result of a == c: " << test << endl;
-    Comparable* ptr = &a;
-    Comparable* ptr2 = &b; //copies the address of a
-    cout << "Ptr2 to ptr: " << ptr2 << endl;
-    ptr2 = ptr;
-    int temp = *(int)a;
-    if(*ptr == a){
-        cout << "This is a space" << endl;
-    }
-    cout << "Ptr to a: " << ptr << endl;
-    cout << "Ptr2 to ptr: " << ptr2 << endl;
+    Comparable* ptrA = &a;
+    Comparable* ptrB = &b; //copies the address of a
+    Comparable* ptrC = &c;
+    cout << "Ptr to Comparable A: " << *ptrA << endl;
+    cout << "Ptr to Comparable B: " << *ptrB << endl;
+    cout << "Ptr to Comparable C: " << *ptrC << endl;
 
     cout << "************************" << endl;
     cout << "Testing SearchTree Class" << endl;
 
     SearchTree tree;
-
+    cout << "Tree 1 " << endl;
+    tree.insert(ptrA);
+    tree.insert(ptrA);
+    tree.insert(ptrB);
+    tree.insert(ptrC);
     cout << tree;
 
+    SearchTree tree2;
+    cout << "Tree 2 " << endl;
+    tree2.insert(ptrA);
+    tree2.insert(ptrA);
+    tree2.insert(ptrB);
+    tree2.insert(ptrC);
+    tree2.insert(ptrC);
+    cout << tree2;
 
+    cout << "Tree 3 " << endl;
+    SearchTree tree3 = tree;
+    cout << tree3;
+
+    bool equal = tree == tree2;
+    cout << " Tree == tree2 (0): "<< equal << endl;
+    equal = tree3 != tree;
+    cout << " Tree3 != tree (0): "<< equal << endl;
+    equal = tree3 == tree;
+    cout << " Tree3 == tree (1): "<< equal << endl;
+    equal = tree3 == tree2;
+    cout << " Tree3 == tree2(0): "<< equal << endl;
+
+    cout << "Tree 1 after removal of one A:" << endl;
+    tree.remove(a);
+    cout << tree;
+
+    cout << "Tree 1 after removal of one c:" << endl;
+    tree.remove(c);
+    cout << tree;
+
+    cout << *tree2.retrieve(a) << endl;
+    if(tree.retrieve(c) == nullptr){
+        cout << "Nothing here!" << endl;
+    }
 
     return 0;
 }

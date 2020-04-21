@@ -84,7 +84,7 @@ private:
     int Nodenums; //helps keep track of nodes
 
     //private method to help deep copy
-    void copyHelper(Node* otherRoot, Node* &thisRoot);
+    static void copyHelper(Node* otherRoot, Node* &thisRoot);
 
     //compare helper
     bool comparingHelper(Node* otherRoot, Node* thisRoot) const;
@@ -96,7 +96,13 @@ private:
 
     bool isEmpty() const;
 
-    void clear(Node* curr);
+    static void clear(Node* curr);
+
+    int heightRecursiveHelper(Node* curr,const Comparable& item) const;
+
+    bool deleteNode(Node*& curr,const Comparable& item);
+
+    Comparable* deleteLeft(Node*& curr);
 
     bool insertHelper(Node* curr, Comparable* newItem);
 
