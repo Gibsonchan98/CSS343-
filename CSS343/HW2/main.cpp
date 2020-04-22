@@ -68,10 +68,21 @@ int main() {
     tree.remove(c);
     cout << tree;
 
-    cout << *tree2.retrieve(a) << endl;
-    if(tree.retrieve(c) == nullptr){
-        cout << "Nothing here!" << endl;
+    cout << "Height of a in tree: " << tree.height(a) << endl;
+    cout << "Height of b in tree: " << tree.height(b) << endl;
+
+    if(tree.height(c) == -1){
+        cout << "Height of C in tree: -1" << endl;
     }
+
+    cout << "a in tree2: " << *tree2.retrieve(a) << endl;
+    cout << "b in tree2: " << *tree2.retrieve(b) << endl;
+
+    tree2.print2D();
+    cout << "Height of D in tree2: " << tree2.height(a) << endl;
+    cout << "Height of a in tree2: " << tree2.height(b) << endl;
+    cout << "Height of b in tree2: " << tree2.height(c) << endl;
+
 
     return 0;
 }
