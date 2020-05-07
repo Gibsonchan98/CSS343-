@@ -1,18 +1,17 @@
 //
-// VERTEX.H
+// Vertex.h
 // Member function definitions for class Vertex
 // Created by Melanie Palomino on 4/25/20.
 //---------------------------------------------------------------------------
-// Vertex class:  Encapsulates a char value that gathered from user input.
+// Vertex class:  Encapsulates a string value gathered from user input.
 //   This program allows:
-//   -- allows conversion of negative decimals
-//   -- allows output of char data
-//   -- allows for comparison of 2 Comparable objects
+//   -- allows for comparisons between Vertex objects.
+//   -- allows output of string data.
+//   -- allows input of data.
 //
 // Assumptions:
-//   -- There are no blank inputs
-//   -- user must enter valid char when using >>
-//   -- This class needs no constructors or assignment operator, only >> is used
+//   -- Valid input
+//   -- Input will only be through >> operator
 //---------------------------------------------------------------------------
 
 #ifndef VERTEX_H
@@ -26,23 +25,41 @@ using namespace std;
 class Vertex {
 
     //*************** FRIEND OPERATORS *****************************
-    //overloaded operator to display data
+
+    //-------------------------- << -------------------------------
+    // Overloads << operator and displays string data
+    // Preconditions: node
+    // Postconditions: Returns string data
     friend ostream& operator<<(ostream& output, const Vertex& vertex);
 
-    //takes in info by input
+    //-------------------------- >> --------------------------------
+    // Overloads operator >> and saves input into private data string
+    // Preconditions: Input is valid
+    // Postconditions: Input is saved in private string variable
     friend istream& operator>>(istream& input, Vertex& vertex);
     //**************************************************************
 
 public:
     //*************** OPERATOR OVERLOAD ****************************
 
-    //assignment operator
+    //-------------------------- = ---------------------------------
+    // Copies data value of the other Vertex object
+    // Preconditions: There is enough space
+    // Postconditions: This vertex object has same value as other.
     const Vertex& operator=(const Vertex& other);
 
-    //equality operator
+    //-------------------------- == --------------------------------
+    // Compares equality of two vertex objects
+    // Preconditions: other is not empty
+    // Postconditions: True is returned if Vertex objects are the same.
+    //        same. Otherwise, it is false;
     bool operator==(const Vertex& other) const;
 
-    // operator
+    //-------------------------- != --------------------------------
+    // Compares inequality of two vertex objects
+    // Preconditions: other is not empty
+    // Postconditions: True is returned if Vertex objects aren not
+    //        the same. Otherwise, it is false;
     bool operator!=(const Vertex& other) const;
 
     bool operator<(const Vertex& other) const;

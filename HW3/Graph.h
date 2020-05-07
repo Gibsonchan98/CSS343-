@@ -1,18 +1,20 @@
 //
-// GRAPH.H
+// Graph.h
 // Member function definitions for class Graph
 // Created by Melanie Palomino on 4/25/20.
 //---------------------------------------------------------------------------
-// Comparable class:  Encapsulates a char value that gathered from user input.
+// Graph class:  Creates a graph implemented with an adjacency list.
 //   This program allows:
-//   -- allows conversion of negative decimals
-//   -- allows output of char data
-//   -- allows for comparison of 2 Comparable objects
+//   -- allows inserting a edge or replacing an edge
+//   -- allows removing an edge
+//   -- allows displaying all vertices & shortest paths
+//   -- allows displaying of shortest path between two vertices
+//   -- allows finding the shortest path using Dijstra's algorithm
 //
 // Assumptions:
-//   -- There are no blank inputs
-//   -- user must enter valid char when using >>
-//   -- This class needs no constructors or assignment operator, only >> is used
+//   -- All input is valid
+//   -- There is enough space for copies
+//   -- The graph only has up to 100 vertices
 //---------------------------------------------------------------------------
 
 //#ifdef GRAPH_H
@@ -49,6 +51,8 @@ public:
 
     //finds shortest path
     void findShortestPath();
+
+    bool isEmpty() const;
 
     //*************** operator overload ****************************
     const Graph& operator=(const Graph& other);
@@ -90,6 +94,12 @@ private:
     void dataPrinter(int start, int next);
 
     bool removeHelper(EdgeNode* curr, EdgeNode* prev);
+
+    //-------------------------- setTable ---------------------------
+    // Sets all values of table to null or false.
+    // Preconditions: Table exists
+    // Postconditions: Table is set to null or false values.
+    void setTable();
 
     bool inserDuplicate(EdgeNode* curr);
 

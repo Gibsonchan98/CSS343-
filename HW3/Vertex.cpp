@@ -1,31 +1,37 @@
 //
-// VERTEX.CPP
+// Vertex.cpp
 // Member function definitions for class Vertex
 // Created by Melanie Palomino on 4/25/20.
 //---------------------------------------------------------------------------
-// Comparable class:  Encapsulates a char value that gathered from user input.
+// Vertex class:  Encapsulates a string value gathered from user input.
 //   This program allows:
-//   -- allows conversion of negative decimals
-//   -- allows output of char data
-//   -- allows for comparison of 2 Comparable objects
+//   -- allows for comparisons between Vertex objects.
+//   -- allows output of string data.
+//   -- allows input of data.
 //
 // Assumptions:
-//   -- There are no blank inputs
-//   -- user must enter valid char when using >>
-//   -- This class needs no constructors or assignment operator, only >> is used
+//   -- Valid input
+//   -- Input will only be through >> operator
 //---------------------------------------------------------------------------
+
 
 #include "Vertex.h"
 
 //*************** FRIEND OPERATORS ********************************
 
-//displays data of vertex
+//-------------------------- << -------------------------------
+// Overloads << operator and displays string data
+// Preconditions: node
+// Postconditions: Returns string data
 ostream &operator<<(ostream &output, const Vertex &vertex) {
     output << vertex.data;
     return output;
 }
 
-//takes input and stores it in the vertex data
+//-------------------------- >> --------------------------------
+// Overloads operator >> and saves input into private data string
+// Preconditions: Input is valid
+// Postconditions: Input is saved in private string variable
 istream &operator>>(istream &input, Vertex &vertex) {
     input >> vertex.data;
     return input;
@@ -33,6 +39,11 @@ istream &operator>>(istream &input, Vertex &vertex) {
 //*****************************************************************
 
 //*************** OVERLOADED OPERAOTRS ****************************
+
+//-------------------------- = ---------------------------------
+// Copies data value of the other Vertex object
+// Preconditions: There is enough space
+// Postconditions: This vertex object has same value as other.
 const Vertex &Vertex::operator=(const Vertex &other) {
     if(*this != other){
         this->data = other.data;
@@ -40,9 +51,21 @@ const Vertex &Vertex::operator=(const Vertex &other) {
     return *this;
 }
 
+//-------------------------- == --------------------------------
+// Compares equality of two vertex objects
+// Preconditions: other is not empty
+// Postconditions: True is returned if Vertex objects are the same.
+//        same. Otherwise, it is false;
 bool Vertex::operator==(const Vertex &other) const {
     return false;
 }
+
+//-------------------------- != --------------------------------
+// Compares inequality of two vertex objects
+// Preconditions: other is not empty
+// Postconditions: True is returned if Vertex objects aren not
+//        the same. Otherwise, it is false;
+
 bool Vertex::operator!=(const Vertex &other) const {
     return this->data != other.data;
 }

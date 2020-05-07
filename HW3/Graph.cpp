@@ -1,19 +1,20 @@
 //
-// GRAPH.CPP
+// Graph.cpp
 // Member function definitions for class Graph
 // Created by Melanie Palomino on 4/25/20.
 //---------------------------------------------------------------------------
-// Graph class:  Creates a graph
+// Graph class:  Creates a graph implemented with an adjacency list.
 //   This program allows:
-//   -- allows conversion of negative decimals
-//   -- allows output of char data
-//   -- allows for comparison of 2 Comparable objects
+//   -- allows inserting a edge or replacing an edge
+//   -- allows removing an edge
+//   -- allows displaying all vertices & shortest paths
+//   -- allows displaying of shortest path between two vertices
+//   -- allows finding the shortest path using Dijstra's algorithm
 //
 // Assumptions:
 //   -- All input is valid
 //   -- There is enough space for copies
 //   -- The graph only has up to 100 vertices
-
 //---------------------------------------------------------------------------
 
 #include <fstream>
@@ -31,6 +32,88 @@ using namespace std;
 // Postconditions: Graph is constructed with default values.
 Graph::Graph() {
     this->size = 0;
+
+}
+
+//--------------------------- Copy Constructor -----------------------------
+// Copy constructor. Creates a new graph by copying another graph.
+// Preconditions: There is enough space for copy. Other is not empty
+// Postconditions: Graph is constructed with copied values.
+Graph::Graph(const Graph &other) {
+    *this = other;
+    this->setTable();
+}
+
+Graph::~Graph() {
+
+}
+//*****************************************************************************
+
+//---------------------------------  =  ---------------------------------------
+// Assignment operator overload. Copies all values from other.
+// Copies size, table, and adjacency list.
+// Preconditions: There is enough space for copy. Other is not empty.
+// Postconditions: Graph copies all the values of other.
+const Graph& Graph::operator=(const Graph &other) {
+    //if it is empty
+    if(other.isEmpty()){
+        this->clear(); //clear graph
+    }
+    else{
+        this->size = other.size;
+        this->clear(); //delete everything and copy again
+
+        EdgeNode *otherTemp = nullptr, *temp = nullptr; //initialize everything
+
+
+        for(int i = 1; i <= other.size; i++){
+            //create new object
+            vertices[i].data = new Vertex;
+            //copy description
+            vertices[i].data = other.vertices[i].data;   //copy address
+            *vertices[i].data = *other.vertices[i].data; //copy object
+
+            //copy head of list to initalize vertixnode
+            if(other.vertices[i].edgeHead){
+                vertices[i].edgeHead = new EdgeNode;
+                vertices[i].edgeHead->adjVertex = other.vertices[i].edgeHead->adjVertex;
+                vertices[i].edgeHead->weight = other.vertices[i].edgeHead->weight;
+                vertices[i].edgeHead->nextEdge = nullptr;
+                temp = vertices[i].edgeHead;
+                otherTemp = other.vertices[i].edgeHead->nextEdge;
+            }
+
+            //recursion
+            while(otherTemp){
+                //copy Edgenode
+                temp->nextEdge = new EdgeNode;
+                temp->nextEdge->weight = otherTemp->weight;
+                temp->nextEdge->adjVertex =  otherTemp->adjVertex;
+                temp->nextEdge->nextEdge = nullptr;
+
+                temp = temp->nextEdge;
+                otherTemp = otherTemp->nextEdge;
+            }
+        }
+
+
+        this->setTable();
+        for(int i = 1; i <= this->size; i++){
+            for(int j = 1; j <= this->size; j++){
+                this->T[i][j].visited = other.T[i][j].visited;
+                this->T[i][j].dist = other.T[i][j].dist;
+                this->T[i][j].path = other.T[i][j].path;
+            }
+        }
+    }
+    return *this;
+}
+
+//-------------------------- setTable ---------------------------
+// Sets all values of table to false, 0, or infinity.
+// Preconditions: Table exists
+// Postconditions: Table is set to false, 0, or infinity.
+void Graph::setTable(){
     for(int i = 1; i < MAX_VERTICES; i++){
         for(int j = 1; j < MAX_VERTICES; j++){
             T[i][i].visited = false;
@@ -39,15 +122,6 @@ Graph::Graph() {
         }
     }
 }
-
-Graph::Graph(const Graph &other) {
-
-}
-
-Graph::~Graph() {
-
-}
-//*****************************************************************************
 
 //-------------------------------- buildGraph ---------------------------------
 // Builds a graph by reading data from an ifstream
@@ -65,6 +139,7 @@ void Graph::buildGraph(ifstream& infile) {
     for (int v = 1; v <= size; v++) {
         vertices[v].data = new Vertex;
         infile >> *vertices[v].data;	// use Vertex::operator>> to read descriptions
+        vertices[v].edgeHead = nullptr; //initialize edgeHead
     }
 
     // fill cost edge array
@@ -213,9 +288,6 @@ int Graph::lowestCost(int vertex) const {
 
 
 
-const Graph& Graph::operator=(const Graph &other) {
-    return *this;
-}
 
 void Graph::display(int start, int end) {
 
@@ -281,6 +353,14 @@ void Graph::dataPrinter(int start, int next) {
         dataPrinter(start,T[start][next].path);
         cout << *vertices[next].data;
     }
+}
+
+//--------------------------- isEmpty  ---------------------------------
+// Checks if Graph is empty
+// Preconditions:  none
+// Postconditions: True is returned if empty. False otherwise
+bool Graph::isEmpty() const {
+    return this->size == 0; //nothing in there
 }
 
 
