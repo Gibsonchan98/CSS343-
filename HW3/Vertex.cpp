@@ -14,8 +14,11 @@
 //   -- Input will only be through >> operator
 //---------------------------------------------------------------------------
 
+#include <string>
+#include <fstream>
 
 #include "Vertex.h"
+
 
 //*************** FRIEND OPERATORS ********************************
 
@@ -33,7 +36,8 @@ ostream &operator<<(ostream &output, const Vertex &vertex) {
 // Preconditions: Input is valid
 // Postconditions: Input is saved in private string variable
 istream &operator>>(istream &input, Vertex &vertex) {
-    input >> vertex.data;
+    getline(input,vertex.data);
+    //input >>vertex.data;
     return input;
 }
 //*****************************************************************
@@ -56,8 +60,8 @@ const Vertex &Vertex::operator=(const Vertex &other) {
 // Preconditions: other is not empty
 // Postconditions: True is returned if Vertex objects are the same.
 //        same. Otherwise, it is false;
-bool Vertex::operator==(const Vertex &other) const {
-    return false;
+bool Vertex::operator==(const Vertex other) const {
+    return this->data == other.data;
 }
 
 //-------------------------- != --------------------------------
@@ -65,17 +69,9 @@ bool Vertex::operator==(const Vertex &other) const {
 // Preconditions: other is not empty
 // Postconditions: True is returned if Vertex objects aren not
 //        the same. Otherwise, it is false;
-
 bool Vertex::operator!=(const Vertex &other) const {
     return this->data != other.data;
 }
 
 
-bool Vertex::operator>(const Vertex &other) const {
-    return this->data > other.data;
-}
-
-bool Vertex::operator<(const Vertex &other) const {
-    return this->data < other.data;
-}
 //*****************************************************************

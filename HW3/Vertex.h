@@ -40,6 +40,8 @@ class Vertex {
     //**************************************************************
 
 public:
+
+
     //*************** OPERATOR OVERLOAD ****************************
 
     //-------------------------- = ---------------------------------
@@ -53,7 +55,7 @@ public:
     // Preconditions: other is not empty
     // Postconditions: True is returned if Vertex objects are the same.
     //        same. Otherwise, it is false;
-    bool operator==(const Vertex& other) const;
+    bool operator==(const Vertex other) const;
 
     //-------------------------- != --------------------------------
     // Compares inequality of two vertex objects
@@ -62,9 +64,7 @@ public:
     //        the same. Otherwise, it is false;
     bool operator!=(const Vertex& other) const;
 
-    bool operator<(const Vertex& other) const;
-    bool operator>(const Vertex& other) const;
-
+    void setData(string des);
     //**************************************************************
 
 private:
