@@ -54,6 +54,9 @@ public:
 
     bool isEmpty() const;
 
+
+    void tempBuild(int size);
+
     //*************** operator overload ****************************
     const Graph& operator=(const Graph& other);
     //**************************************************************
@@ -63,12 +66,12 @@ private:
     struct EdgeNode {
         int adjVertex;			// subscript of the adjacent vertex
         int weight;				// weight of edge
-        EdgeNode *nextEdge;
+        EdgeNode* nextEdge;
     };
 
     struct VertexNode {
-        EdgeNode *edgeHead;		// head of the list of edges
-        Vertex *data;			// store vertex data here
+        EdgeNode* edgeHead;		// head of the list of edges
+        Vertex* data;			// store vertex data here
     };
 
     // array of VertexNodes
@@ -108,4 +111,3 @@ private:
     int costReturn(int vertex) const;
 
 };
-

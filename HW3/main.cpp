@@ -1,11 +1,39 @@
-#include <iostream>
-#include <string>
-#include "Graph.h"
+#include <iostream> 
+#include <fstream> 
+#include <string> 
 
-using namespace std;
+#include "Graph.h" 
+
+using namespace std; 
 
 int main() {
-   cout << "Testing Insert Edge" << endl;
-   cout << "Testing Display" << endl;
-    return 0;
+
+/*	ifstream file("HW3Test.txt"); 
+
+	if (!file) {
+		cout << "FILE COULD NOT BE OPENED" << endl; 
+		return 1; 
+	}
+
+	for (;;) {
+		Graph g;
+		g.buildGraph(file);
+		if (file.eof())
+			break;
+		g.findShortestPath();
+		g.display(2, 3);
+		g.displayAll();	
+	}
+	*/
+
+	Graph G; 
+	//G.displayAll();
+	G.tempBuild(4); 
+	G.displayAll(); 
+	cout << "GOOD JOB! DONE!" << endl; 
+
+	return 0;
+
+
+
 }
