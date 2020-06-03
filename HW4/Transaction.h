@@ -4,7 +4,7 @@
 // Created by Melanie Palomino on 5/19/20.
 //---------------------------------------------------------------------------
 // Transaction class: Represents a transaction. It is a parent class.
-//      It has a char type and an Inventory pointer.
+//      It has a char type.
 //
 //   This program allows:
 //  	- Allows the display of a Transaction
@@ -100,14 +100,6 @@ public:
     virtual bool operator>(const Inventory& other) const;
 
 
-
-    //----------------------------  getItem -------------------------------------
-    // Returns pointer to item
-    // Preconditions: Item is not null
-    // Postconditions: Pointer to Inventory item is returned
-    Inventory* getItem() const;
-
-
     //---------------------  getType ---------------------------------
     // Returns Transaction's type
     // Preconditions: none
@@ -119,8 +111,6 @@ private:
     //private char to store type
     char transactionType;
 
-    //Pointer to an Inventory item
-    Inventory* item;
 };
 
 

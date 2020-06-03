@@ -16,3 +16,98 @@
 //---------------------------------------------------------------------------
 
 #include "Sell.h"
+#include "Store.h"
+
+//--------------------------- Deafult Constructor -----------------------------
+// Default constructor. Creates a default sell transaction
+// Preconditions:  none
+// Postconditions: Sell transaction is constructed with default values.
+Sell::Sell() : Transaction() {
+    this->custID = 0;
+    this->item = nullptr;
+}
+
+
+//-------------------------- Constructor -----------------------------
+// Creates a Sell Transaction with input
+// Preconditions: Input is valid
+// Postconditions: This attributes are initialized with input values
+Sell::Sell(char type,  Inventory* item, int custID) : Transaction(type){
+    this->custID = custID;
+    this->item = item; //copy pointer
+   // *this->item = *item; //copy item
+}
+
+//--------------------------- Destructor ----------------------------
+// Deallocates all used memory
+// Preconditions: none
+// Postconditions: All memory is deallocated
+Sell::~Sell(){
+    delete this->item;
+}
+
+//---------------------------------Display --------------------------------------
+// Displays Sell transaction info
+// Preconditions:  none
+// Postconditions: Sell transaction type is displayed
+void Sell::display(ostream& output) const{
+    output << "Transaction: ";
+    Transaction::display(output);
+    if(this->item != nullptr){
+        output << *item;
+    }
+
+}
+
+//-----------------------------  run  ---------------------------------
+// Runs selling function
+// Preconditions: Item has enough amount in stock
+// Postconditions: Selling execution is ran
+void Sell::run(Store* store) const{
+    store->sell();
+}
+
+
+//----------------------------- create ---------------------------------
+// Creates a Sell object using file input
+// Preconditions:  Input is in correct format and valid
+// Postconditions: returns new Sell object constructed with input values.
+Sell* Sell::create(ifstream& infile) const{
+    char transtype;
+    int id;
+    infile >> transtype;
+    infile.ignore();
+    infile >> id;
+    infile.ignore();
+    infile.ignore();
+    return new Sell(transtype,nullptr,id);
+}
+
+//--------------------------- clone --------------------------------------
+// Creates a clone of Buy object
+// Preconditions:  none
+// Postconditions: returns a pointer to the clone of the Buy Object
+Sell* Sell::clone() const{
+    //char type,  Inventory* item, int custID
+    if(this->item == nullptr){
+        return new Sell(getType(), nullptr,getCustID());
+    }
+
+    return new Sell(getType(),getItem(),getCustID());
+}
+
+//----------------------------  getCustID -------------------------------------
+// Returns cutomer id for sell transaction
+// Preconditions: int is not empty
+// Postconditions: Value of int custID is returned
+int Sell::getCustID() const{
+    return this->custID;
+}
+
+//----------------------------  getItem -------------------------------------
+// Returns pointer to item
+// Preconditions: Item is not null
+// Postconditions: Pointer to Inventory item is returned
+Inventory* Sell::getItem() const{
+    return this->item;
+}

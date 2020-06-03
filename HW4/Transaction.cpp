@@ -48,8 +48,7 @@ bool Transaction::operator>(const Inventory &other) const{
 bool Transaction::operator==(const Inventory &other) const{
     const Transaction& trans = dynamic_cast<const Transaction&>(other);
 
-    return this->transactionType == trans.transactionType &&
-            *this->item == *trans.item;
+    return this->transactionType == trans.transactionType;
 }
 
 bool Transaction::operator!=(const Inventory &other) const {
@@ -58,10 +57,6 @@ bool Transaction::operator!=(const Inventory &other) const {
     return !(*this == trans);
 }
 
-
-Inventory* Transaction::getItem() const {
-    return this->item;
-}
 
 char Transaction::getType() const {
     return this->transactionType;

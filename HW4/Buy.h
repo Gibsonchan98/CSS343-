@@ -4,7 +4,8 @@
 // Created by Melanie Palomino on 5/20/20.
 //---------------------------------------------------------------------------
 // Buy class: Represents Buy transaction. It is a child class of Transaction
-//      It has a custID to save ID related with the transaction.
+//      It has a custID to save ID related with the transaction and
+//      an Inventory pointer.
 //
 //   This program allows:
 //  	- Allows the display of a Buy item
@@ -12,6 +13,7 @@
 //      - Allows the copy of a Buy
 //      - Allows execution of a Buy
 //      - Allows getting custID
+//      - Allows getting an item pointer
 //  Assumptions:
 //  	- The input file has correct formatting and info
 //---------------------------------------------------------------------------
@@ -22,39 +24,24 @@
 
 
 #include "Transaction.h"
+#include "Inventory.h"
 
 class Buy : public Transaction {
+
+public:
+
     //--------------------------- Deafult Constructor -----------------------------
     // Default constructor. Creates a default Buy transaction
     // Preconditions:  none
     // Postconditions:Buy transaction is constructed with default values.
     Buy();
 
-    //--------------------------Copy Constructor -----------------------------
-    // Creates a Buy transaction based on other Buy transaction
-    // Preconditions: other is not null. There's enough space for other
-    // Postconditions: Buy transaction is constructed with Other's values.
-    Buy(const Buy& other){
-        //set all this values to other values
-    }
-
-    //-------------------------- Constructor -----------------------------
-    // Creates a Buy Transaction with char input
-    // Preconditions: input is valid
-    // Postconditions: This type is initialized with input value
-    Buy(char type){
-        // this char = param type
-    }
 
     //-------------------------- Constructor -----------------------------
     // Creates a Buy Transaction with input
     // Preconditions: Input is valid
     // Postconditions: This attributes are initialized with input values
-    Buy(char type,  Inventory* item, int custID){
-        // this char = param type
-        // this item = param item
-        // this custID = param custID
-    }
+    Buy(char type,  Inventory* item, int custID);
 
     //--------------------------- Destructor ----------------------------
     // Deallocates all used memory
@@ -66,52 +53,27 @@ class Buy : public Transaction {
     // Displays Buy transaction info
     // Preconditions:  none
     // Postconditions: Buy transaction type is displayed
-    virtual void display(ostream output) const{
-        /*
-         * output << "BUY" ;
-         * Transaction : display(output)
-         * */
-    }
+    virtual void display(ostream& output) const;
 
     //-----------------------------  run  ---------------------------------
     // Runs Buying function
     // Preconditions: There's enough space for more items
     // Postconditions: Buying execution is ran
-    virtual void run(Store* store) const{
-        //run buy function in store manager
-    }
+    virtual void run(Store* store) const;
 
 
     //----------------------------- create ---------------------------------
     // Creates a Buy object using file input
     // Preconditions:  Input is in correct format and valid
     // Postconditions: returns new Buy object constructed with input values.
-    virtual Buy* create(ifstream infile){
-        /*
-         *  create temp data variables
-         *  read lines from file
-         *  save input to type & custID
-         *  return new Buy(temp data variables)
-         * */
-    }
+    virtual Buy* create(ifstream& infile) const;
 
 
-    //----------------------------  =  -------------------------------------
-    // Assignment operator overloaded. Creates Buy based on the other
-    // Preconditions: There's enough space for a copy
-    // Postconditions: Returns Buy object that is constructed
-    //          with Other's values.
-    virtual Buy* operator=(const Inventory& other){
-        /*
-         * const Buy& temp = dynamic cast (Buy)
-         *
-         * this type = temp's type
-         * this custID = temp's id
-         *
-         * return *this;
-         *
-         */
-    }
+    //--------------------------- clone --------------------------------------
+    // Creates a clone of Buy object
+    // Preconditions:  none
+    // Postconditions: returns a pointer to the clone of the Buy Object
+    virtual Buy* clone() const;
 
     //----------------------------  getCustID -------------------------------------
     // Returns cutomer id for buy transaction
@@ -119,9 +81,19 @@ class Buy : public Transaction {
     // Postconditions: Value of int custID is returned
     int getCustID() const;
 
+    //----------------------------  getItem -------------------------------------
+    // Returns pointer to item
+    // Preconditions: Item is not null
+    // Postconditions: Pointer to Inventory item is returned
+    Inventory* getItem() const;
+
 private:
+
     //ID of customer for this transaction
     int custID;
+
+    //Pointer to an Inventory item
+    Inventory* item;
 
 };
 

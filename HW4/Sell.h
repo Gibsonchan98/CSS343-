@@ -29,30 +29,21 @@
 class Customer;
 
 class Sell: public Transaction {
+
+public:
+
     //--------------------------- Deafult Constructor -----------------------------
     // Default constructor. Creates a default sell transaction
     // Preconditions:  none
     // Postconditions: Sell transaction is constructed with default values.
     Sell();
 
-
-    //-------------------------- Constructor -----------------------------
-    // Creates a Sell Transaction with char input
-    // Preconditions: input is valid
-    // Postconditions: This type is initialized with input value
-    Sell(char type){
-        // this char = param type
-    }
-
+    
     //-------------------------- Constructor -----------------------------
     // Creates a Sell Transaction with input
     // Preconditions: Input is valid
     // Postconditions: This attributes are initialized with input values
-    Sell(char type,  Inventory* item, int custID){
-        // this char = param type
-        // this item = param item
-        // this custID = param custID
-    }
+    Sell(char type,  Inventory* item, int custID);
 
     //--------------------------- Destructor ----------------------------
     // Deallocates all used memory
@@ -64,34 +55,26 @@ class Sell: public Transaction {
     // Displays Sell transaction info
     // Preconditions:  none
     // Postconditions: Sell transaction type is displayed
-    virtual void display(ostream output) const{
-        /*
-         * output << "SELL";
-         * Transaction : display(output)
-         * */
-    }
+    virtual void display(ostream& output) const;
 
     //-----------------------------  run  ---------------------------------
     // Runs selling function
     // Preconditions: Item has enough amount in stock
     // Postconditions: Selling execution is ran
-    virtual void run(Store* store) const{
-        //run sell function in store manager
-    }
+    virtual void run(Store* store) const;
 
 
     //----------------------------- create ---------------------------------
     // Creates a Sell object using file input
     // Preconditions:  Input is in correct format and valid
     // Postconditions: returns new Sell object constructed with input values.
-    virtual Sell* create(ifstream& infile) const{
-        /*
-         *  create temp data variables
-         *  read lines from file
-         *  save input to type & custID
-         *  return new Sell(temp data variables)
-         * */
-    }
+    virtual Sell* create(ifstream& infile) const;
+
+    //--------------------------- clone --------------------------------------
+    // Creates a clone of Buy object
+    // Preconditions:  none
+    // Postconditions: returns a pointer to the clone of the Buy Object
+    virtual Sell* clone() const;
 
     //----------------------------  getCustID -------------------------------------
     // Returns cutomer id for sell transaction
@@ -99,9 +82,18 @@ class Sell: public Transaction {
     // Postconditions: Value of int custID is returned
     int getCustID() const;
 
+    //----------------------------  getItem -------------------------------------
+    // Returns pointer to item
+    // Preconditions: Item is not null
+    // Postconditions: Pointer to Inventory item is returned
+    Inventory* getItem() const;
+
 private:
     //ID of customer for this transaction
     int custID;
+
+    //Pointer to an Inventory item
+    Inventory* item;
 };
 
 
