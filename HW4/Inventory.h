@@ -20,7 +20,6 @@
 #define INVENTORY_H
 
 #include <iostream>
-#include <iomanip>
 #include <string>
 #include <fstream>
 
@@ -32,8 +31,9 @@ class Inventory {
     // Overloads << operator
     // Preconditions:  Inventory is not empty
     // Postconditions: Inventory information and history is displayed
-    friend ostream operator<<(ostream& ouptut, const Inventory& item){
-        //call display
+    friend ostream& operator<<(ostream& output, const Inventory& item){
+       item.display(output);
+       return output;
     }
 
 public:
@@ -41,14 +41,14 @@ public:
     // Default constructor. Creates a default Inventory
     // Preconditions:  None
     // Postconditions: Inventory is constructed with default values.
-    Inventory();
+    Inventory(){}
 
 
     //--------------------------- Destructor ----------------------------------
     // Deallocates all used memory
     // Preconditions:  None
     // Postconditions: All memory is deallocated
-    virtual ~Inventory() = 0;
+    virtual ~Inventory() {}
 
     //--------------------------- create --------------------------------------
     // Creates an Invetory object

@@ -48,23 +48,22 @@ void HashTable::insert(char key, Inventory *value) {
 }
 
 
-void HashTable::clear(char key, Inventory *value) {
-
-}
-
-
 void HashTable::resize(int size) {
     int tempSize;
-    Inventory **tempArray = new Inventory*[this->size + 1]();
+    Inventory **tempArray = new Inventory*[size + 1]();
     for(int i = 0; i <= size; i++){
         tempArray[i] = nullptr;
     }
-    for(int i = 0; i <= size; i++){
+    for(int i = 0; i <= this->size; i++){
         tempArray[i] = arrayHash[i];
     }
     //delete data
     delete arrayHash;
+    arrayHash = tempArray;
 
+    this->size = size + 1;
+
+    tempArray = nullptr;
 }
 
 int HashTable::hash(char key) const {

@@ -21,14 +21,14 @@
 #define TRANSACTION_H
 
 #include <string>
-#include <vector>
 #include <iostream>
 #include <fstream>
+#include <climits>
+
 #include "Inventory.h"
 
 using namespace std;
 
-class Customer;
 class Store;
 
 class Transaction : public Inventory {
@@ -53,7 +53,7 @@ public:
     // Deallocates all used memory
     // Preconditions: none
     // Postconditions: All memory is deallocated
-    virtual ~Transaction() = 0;
+    virtual ~Transaction();
 
     //----------------------------- create ---------------------------------
     // Creates a Transaction object using file input
@@ -79,6 +79,8 @@ public:
     // Postconditions: Transaction type is displayed
     void display(ostream &output) const;
 
+    //************************ Operators *****************************************
+
     //-------------------------------- == ---------------------------------------
     // Equal operator overload. Compares two Transaction objects equality
     // Preconditions:  They must have comparable attributes
@@ -99,12 +101,13 @@ public:
     // Postconditions: Returns true if this is greater than the other
     virtual bool operator>(const Inventory& other) const;
 
+    //*****************************************************************************
 
     //---------------------  getType ---------------------------------
     // Returns Transaction's type
     // Preconditions: none
     // Postconditions: Value of char type is returned
-    char getType() const; //{return this->char }
+    char getType() const;
 
 private:
 

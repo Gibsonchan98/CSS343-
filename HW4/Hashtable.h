@@ -20,7 +20,7 @@
 #include <iostream>
 #include <vector>
 
-#include "Transaction.h"
+#include "Buy.h" //will find out soon
 
 using namespace std;
 
@@ -63,7 +63,7 @@ private:
     //size of the array
     int size;
 
-    const static int SIZE = 26;
+    const static int SIZE = 10;
 
     //array of stored Inventory objects
     Inventory **arrayHash;

@@ -24,6 +24,7 @@
 #include <fstream>
 
 #include "Transaction.h"
+#include "Collectible.h"
 
 using namespace std;
 
@@ -77,6 +78,12 @@ public:
     // Preconditions: int is not empty
     // Postconditions: Value of int custID is returned
     int getCustID() const;
+
+    //----------------------------  getItem -------------------------------------
+    // Returns pointer to item
+    // Preconditions: Item is not null
+    // Postconditions: Pointer to Inventory item is returned
+    Collectible* getItem() const;
 
 
 private:

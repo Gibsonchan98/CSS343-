@@ -50,6 +50,7 @@ void InventoryDisplay::run(Store* store) const{
 InventoryDisplay* InventoryDisplay::create(ifstream& infile) const{
     char type;
     infile >> type;
+    //ignores all characters until new line
     infile.ignore(INT_MAX, '\n');
     return new InventoryDisplay(type);
 }

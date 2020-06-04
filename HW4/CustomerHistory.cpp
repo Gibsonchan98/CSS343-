@@ -51,6 +51,10 @@ int CustomerHistory::getCustID() const {
     return this->custID;
 }
 
+Collectible *CustomerHistory::getItem() const {
+    return nullptr;
+}
+
 
 
 

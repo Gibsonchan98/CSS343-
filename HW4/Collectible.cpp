@@ -39,7 +39,10 @@ Collectible::Collectible(int year, string name, int amount, char type)
 }
 
 
+Collectible::~Collectible(){}
+
 void Collectible::display(ostream& output) const {
+   // output << this->type << setw(3);
     output << this->name << "--" << this->year;
 }
 

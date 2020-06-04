@@ -7,21 +7,20 @@
 using namespace std;
 
 int main() {
- /*
-  * Store store();
-  * ifstream infile1("xx1");
-	ifstream infile2("xx2");
-	ifstream infile3("xx3");
+    Store store;
+    ifstream infile1("hw4inventory.txt");
+    ifstream infile2("hw4commands.txt");
+    ifstream infile3("hw4customers.txt");
 
-    if(cannot open one file){
-        cout << ERROR MESSAGE;
+    if(!infile1 || !infile2 || infile3){
+        cout << "FILE CANNOT BE OPENED" << endl;
         return 1;
     }
 
-    store->buildInventory(infile1);
-    store->buildCustomer(infile2);
-    store->buildTransaction(infile3);
-    return 0;
- */
+    store.buildInventory(infile1);
+    store.buildCustomers(infile2);
+    store.buildTransactions(infile3);
+    store.processTransactions();
+
 
 }

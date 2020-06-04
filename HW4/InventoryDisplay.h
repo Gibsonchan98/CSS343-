@@ -22,6 +22,7 @@
 #include <fstream>
 
 #include "Transaction.h"
+#include "Collectible.h"
 
 using namespace std;
 
@@ -65,6 +66,7 @@ public:
     // Preconditions:  none
     // Postconditions: returns a pointer to the clone of the InventoryDisplay Object
     virtual InventoryDisplay* clone() const;
+
 };
 
 

@@ -22,29 +22,20 @@
 // Default constructor. Creates a default sell transaction
 // Preconditions:  none
 // Postconditions: Sell transaction is constructed with default values.
-Sell::Sell() : Transaction() {
-    this->custID = 0;
-    this->item = nullptr;
-}
+Sell::Sell() : TransactionItem() {}
 
 
 //-------------------------- Constructor -----------------------------
 // Creates a Sell Transaction with input
 // Preconditions: Input is valid
 // Postconditions: This attributes are initialized with input values
-Sell::Sell(char type,  Inventory* item, int custID) : Transaction(type){
-    this->custID = custID;
-    this->item = item; //copy pointer
-   // *this->item = *item; //copy item
-}
+Sell::Sell(char type, Collectible* item, int custID) : TransactionItem(type,item,custID){}
 
 //--------------------------- Destructor ----------------------------
 // Deallocates all used memory
 // Preconditions: none
 // Postconditions: All memory is deallocated
-Sell::~Sell(){
-    delete this->item;
-}
+Sell::~Sell(){}
 
 //---------------------------------Display --------------------------------------
 // Displays Sell transaction info
@@ -52,11 +43,7 @@ Sell::~Sell(){
 // Postconditions: Sell transaction type is displayed
 void Sell::display(ostream& output) const{
     output << "Transaction: ";
-    Transaction::display(output);
-    if(this->item != nullptr){
-        output << *item;
-    }
-
+    TransactionItem::display(output);
 }
 
 //-----------------------------  run  ---------------------------------
@@ -89,25 +76,10 @@ Sell* Sell::create(ifstream& infile) const{
 // Postconditions: returns a pointer to the clone of the Buy Object
 Sell* Sell::clone() const{
     //char type,  Inventory* item, int custID
-    if(this->item == nullptr){
+    if(this->getItem() == nullptr){
         return new Sell(getType(), nullptr,getCustID());
     }
 
-    return new Sell(getType(),getItem(),getCustID());
+    return new Sell(getType(),getItem()->clone(),getCustID());
 }
 
-//----------------------------  getCustID -------------------------------------
-// Returns cutomer id for sell transaction
-// Preconditions: int is not empty
-// Postconditions: Value of int custID is returned
-int Sell::getCustID() const{
-    return this->custID;
-}
-
-//----------------------------  getItem -------------------------------------
-// Returns pointer to item
-// Preconditions: Item is not null
-// Postconditions: Pointer to Inventory item is returned
-Inventory* Sell::getItem() const{
-    return this->item;
-}

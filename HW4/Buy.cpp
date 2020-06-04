@@ -19,32 +19,25 @@
 #include "Buy.h"
 #include "Store.h"
 
+using namespace std;
+
 //--------------------------- Deafult Constructor -----------------------------
 // Default constructor. Creates a default Buy transaction
 // Preconditions:  none
 // Postconditions:Buy transaction is constructed with default values.
-Buy::Buy() : Transaction(){
-    this->custID = 0;
-    this->item = nullptr;
-}
+Buy::Buy() : TransactionItem(){}
 
 //-------------------------- Constructor -----------------------------
 // Creates a Buy Transaction with input
 // Preconditions: Input is valid
 // Postconditions: This attributes are initialized with input values
-Buy::Buy(char type,  Inventory* item, int custID) : Transaction(type){
-    this->custID = custID;
-    this->item = item; //copy pointer
-    //*this->item = *item; //copy item
-}
+Buy::Buy(char type, Collectible* item, int custID) : TransactionItem(type,item,custID){}
 
 //--------------------------- Destructor ----------------------------
 // Deallocates all used memory
 // Preconditions: none
 // Postconditions: All memory is deallocated
-Buy::~Buy(){
-    delete this->item;
-}
+Buy::~Buy(){}
 
 //---------------------------------Display --------------------------------------
 // Displays Buy transaction info
@@ -52,11 +45,7 @@ Buy::~Buy(){
 // Postconditions: Buy transaction type is displayed
 void Buy::display(ostream& output) const{
     output << "Transaction: ";
-    Transaction::display(output);
-    if(this->item != nullptr){
-        output << *item;
-    }
-
+    TransactionItem::display(output);
 }
 
 //-----------------------------  run  ---------------------------------
@@ -89,27 +78,12 @@ Buy* Buy::create(ifstream& infile) const{
 // Preconditions:  none
 // Postconditions: returns a pointer to the clone of the Buy Object
 Buy* Buy::clone() const{
-    //char type,  Inventory* item, int custID
-    if(this->item == nullptr){
+    //char type,  Collectible* item, int custID
+    if(this->getItem() == nullptr){
         return new Buy(getType(), nullptr,getCustID());
     }
 
-    return new Buy(getType(),getItem(),getCustID());
-}
-
-//----------------------------  getCustID -------------------------------------
-// Returns cutomer id for buy transaction
-// Preconditions: int is not empty
-// Postconditions: Value of int custID is returned
-int Buy::getCustID() const{
-    return this->custID;
+    return new Buy(getType(),getItem()->clone(),getCustID());
 }
 
 
-//----------------------------  getItem -------------------------------------
-// Returns pointer to item
-// Preconditions: Item is not null
-// Postconditions: Pointer to Inventory item is returned
-Inventory* Buy::getItem() const {
-    return this->item;
-}

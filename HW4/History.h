@@ -40,7 +40,7 @@ public:
     // Creates a History with char input
     // Preconditions: char type is valid
     // Postconditions: This type is initialized with input value
-    explicit History(char type);
+    History(char type);
 
     //--------------------------- Destructor ----------------------------
     // Deallocates all used memory
@@ -50,10 +50,9 @@ public:
 
     //-----------------------------  run  ---------------------------------
     // Runs History function
-    // Preconditions: customer exists
+    // Preconditions: None
     // Postconditions: History execution is ran
     virtual void run(Store* store) const;
-
 
     //----------------------------- create ---------------------------------
     // Creates a History object using file input
@@ -66,6 +65,7 @@ public:
     // Preconditions:  none
     // Postconditions: returns a pointer to the clone of the History Object
     virtual History* clone() const;
+
 };
 
 

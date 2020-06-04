@@ -23,12 +23,9 @@
 #include <iostream>
 #include <fstream>
 
-#include "Transaction.h"
-#include "Collectible.h"
+#include "TransactionItem.h"
 
-class Customer;
-
-class Sell: public Transaction {
+class Sell: public TransactionItem {
 
 public:
 
@@ -37,13 +34,12 @@ public:
     // Preconditions:  none
     // Postconditions: Sell transaction is constructed with default values.
     Sell();
-
     
     //-------------------------- Constructor -----------------------------
     // Creates a Sell Transaction with input
     // Preconditions: Input is valid
     // Postconditions: This attributes are initialized with input values
-    Sell(char type,  Inventory* item, int custID);
+    Sell(char type,  Collectible* item, int custID);
 
     //--------------------------- Destructor ----------------------------
     // Deallocates all used memory
@@ -76,24 +72,6 @@ public:
     // Postconditions: returns a pointer to the clone of the Buy Object
     virtual Sell* clone() const;
 
-    //----------------------------  getCustID -------------------------------------
-    // Returns cutomer id for sell transaction
-    // Preconditions: int is not empty
-    // Postconditions: Value of int custID is returned
-    int getCustID() const;
-
-    //----------------------------  getItem -------------------------------------
-    // Returns pointer to item
-    // Preconditions: Item is not null
-    // Postconditions: Pointer to Inventory item is returned
-    Inventory* getItem() const;
-
-private:
-    //ID of customer for this transaction
-    int custID;
-
-    //Pointer to an Inventory item
-    Inventory* item;
 };
 
 

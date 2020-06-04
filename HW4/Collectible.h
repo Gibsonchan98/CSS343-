@@ -25,6 +25,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <climits>
 
 #include "Inventory.h"
 
@@ -50,7 +51,7 @@ public:
     // Deallocates all used memory
     // Preconditions:  None
     // Postconditions: All memory is deallocated
-    virtual ~Collectible() = 0;
+    virtual ~Collectible();
 
     //--------------------------- create ----------------------------
     // Creates a Collectible object

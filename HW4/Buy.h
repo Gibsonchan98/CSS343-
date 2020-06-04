@@ -22,11 +22,9 @@
 #ifndef BUY_H
 #define BUY_H
 
+#include "TransactionItem.h"
 
-#include "Transaction.h"
-#include "Inventory.h"
-
-class Buy : public Transaction {
+class Buy : public TransactionItem {
 
 public:
 
@@ -41,7 +39,7 @@ public:
     // Creates a Buy Transaction with input
     // Preconditions: Input is valid
     // Postconditions: This attributes are initialized with input values
-    Buy(char type,  Inventory* item, int custID);
+    Buy(char type, Collectible* item, int custID);
 
     //--------------------------- Destructor ----------------------------
     // Deallocates all used memory
@@ -75,25 +73,7 @@ public:
     // Postconditions: returns a pointer to the clone of the Buy Object
     virtual Buy* clone() const;
 
-    //----------------------------  getCustID -------------------------------------
-    // Returns cutomer id for buy transaction
-    // Preconditions: int is not empty
-    // Postconditions: Value of int custID is returned
-    int getCustID() const;
 
-    //----------------------------  getItem -------------------------------------
-    // Returns pointer to item
-    // Preconditions: Item is not null
-    // Postconditions: Pointer to Inventory item is returned
-    Inventory* getItem() const;
-
-private:
-
-    //ID of customer for this transaction
-    int custID;
-
-    //Pointer to an Inventory item
-    Inventory* item;
 
 };
 
