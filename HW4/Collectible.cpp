@@ -23,6 +23,10 @@
 
 #include <utility>
 
+//--------------------------- Deafult Constructor -----------------------------
+// Default constructor. Creates a default Inventory
+// Preconditions:  None
+// Postconditions: Collectible is constructed with default values.
 Collectible::Collectible() : Inventory(){
     this->amount = 0;
     this->name = "";
@@ -30,6 +34,10 @@ Collectible::Collectible() : Inventory(){
     this->year = 0;
 }
 
+/--------------------------- Constructor -----------------------------
+// Constructs a Collectible with the parameter values
+// Preconditions:  None
+// Postconditions: Collectible is created with inputed values
 Collectible::Collectible(int year, string name, int amount, char type)
             : Inventory(){
     this->amount = amount;
@@ -38,26 +46,50 @@ Collectible::Collectible(int year, string name, int amount, char type)
     this->year = year;
 }
 
-
+//--------------------------- Destructor ----------------------------
+// Deallocates all used memory
+// Preconditions:  None
+// Postconditions: All memory is deallocated
 Collectible::~Collectible(){}
 
+//---------------------------------display --------------------------------------
+// Displays Collectible's information
+// Preconditions: Collectible is not empty
+// Postconditions: Collectible's information is displayed
 void Collectible::display(ostream& output) const {
-   // output << this->type << setw(3);
-    output << this->name << "--" << this->year;
+   //output << this->type << setw(3);
+    output << this->name << "--" << this->year << " ";
 }
 
+//---------------------getType-------------------------------
+// Returns the number type of this Collectible.
+// Preconditions: None.
+//Postconditions: Type was returned.
 char Collectible::getType() const {
     return this->type;
 }
 
+//---------------------getAmount-------------------------------
+//
+// Returns the amount of this Collectible.
+// Preconditions: None.
+//Postconditions: Amount was returned.
 int Collectible::getAmount() const {
     return this->amount;
 }
 
+//---------------------getName-------------------------------
+// Returns the name of this Collectible.
+// Preconditions: None.
+//Postconditions: Namewas returned.
 string Collectible::getName() const {
     return this->name;
 }
 
+//---------------------getYear-------------------------------
+// Returns the year of this Collectible.
+// Preconditions: None.
+//Postconditions: Year was returned.
 int Collectible::getYear() const {
     return this->year;
 }

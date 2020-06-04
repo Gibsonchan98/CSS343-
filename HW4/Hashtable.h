@@ -20,7 +20,7 @@
 #include <iostream>
 #include <vector>
 
-#include "Buy.h" //will find out soon
+#include "Buy.h"
 
 using namespace std;
 
@@ -32,7 +32,7 @@ public:
     //Default Constructor creates a hashtable with a default capacity and
     //  initiates array.
     // Preconditions: None.
-    // Postconditions: Hshtable is created with the default
+    // Postconditions: Hashtable is created with the default
     //		   size and initialized
     HashTable();
 
@@ -45,14 +45,14 @@ public:
 
 
 
-    //--------------------- add --------------------------------
-    // Safes value at the key in HashTable
+    //--------------------- insert --------------------------------
+    // Saves value at the key in HashTable
     // Preconditions: Key and value are not empty or nullptr
     // Postconditions: The value was added to this hashtable.
     void insert(char key, Inventory *value);
 
 
-    //---------------------get------------------------------------
+    //---------------------retrieve ---------------------------------
     // Returns pointer Inventory object that is safed at that key
     // Preconditions: Key exists
     // Postconditions: Pointer to value is returned
@@ -81,12 +81,6 @@ private:
     // Postconditions: arrayHash has been increased to size and has
     //      all data safed again
     void resize (int size);
-
-    //--------------------- clear --------------------------------
-    // Empties values of HashTable
-    // Preconditions: none
-    // Postconditions: HashTable is cleared
-    void clear(char key, Inventory *value);
 
 };
 

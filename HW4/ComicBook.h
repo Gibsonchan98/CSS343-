@@ -29,7 +29,7 @@ public:
     //--------------------------- Deafult Constructor -----------------------------
     // Default constructor. Creates a default ComicBook
     // Preconditions:  None
-    // Postconditions: Coin is constructed with default values.
+    // Postconditions: Comicbook is constructed with default values.
     ComicBook();
 
     //--------------------------- Constructor -----------------------------

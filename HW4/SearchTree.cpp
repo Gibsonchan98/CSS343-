@@ -471,7 +471,8 @@ int SearchTree::getCountRecursive(const Inventory& item, const Node* curr) const
 void SearchTree::displayHelper(ostream &output,Node *curr) const {
     if(curr != nullptr){
         displayHelper(output,curr->leftPtr);
-        output << *curr->dataPtr << " "  << curr->frequency << endl;
+        output << *curr->dataPtr << " " << "Amount: ";
+        output << curr->frequency << endl;
         displayHelper(output,curr->rightPtr);
     }
 }

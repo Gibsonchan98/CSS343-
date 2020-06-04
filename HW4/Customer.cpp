@@ -46,9 +46,10 @@ Customer::Customer(ifstream& input){
 // Creates a customer from string name and int ID
 // Preconditions: Name and ID are valid input
 // Postconditions: Customer is constructed with input values.
-Customer::Customer(string name, int ID){
+Customer::Customer(string name, int ID) : Inventory(){
     this->name = name;
     this->ID = ID;
+    this->transactionHistory = new vector<Transaction*>();
 }
 
 
@@ -77,7 +78,12 @@ Customer::~Customer(){
 // Preconditions:  input is in correct format and valid
 // Postconditions: returns new Customer object constructed with input values.
 Customer* Customer::create(ifstream& input) const{
-    return new Customer(input);
+    int ID;
+    string nameT;
+    input >> ID;
+    input.ignore(2);
+    getline(input,nameT);
+    return new Customer(nameT,ID);
 }
 
 //--------------------------- clone --------------------------------------
@@ -85,13 +91,12 @@ Customer* Customer::create(ifstream& input) const{
 // Preconditions:  none
 // Postconditions: returns a pointer to the clone of the Inventory Object
 Customer* Customer::clone() const{
-    Transaction* transaction;
     //create new vector
     vector<Transaction*> *transHist = new vector<Transaction*>();
 
-    for(auto & i : *this->transactionHistory){
-        transaction = i->clone();
-        transHist->push_back(transaction);
+    for(int i = 0; i < (long)transactionHistory->size(); i++){
+       // transaction = i->clone();
+        transHist->push_back(transactionHistory->at(i)->clone());
     }
 
     //copy transaction vector
@@ -153,9 +158,9 @@ void Customer::display(ostream& output) const{
     output << "ID: " << setw(8) << this->ID << endl;
     output << "Transaction history: " << endl;
 
-    for(int i = 0; i < this->transactionHistory->size(); i++){
+    for(int i = 0; i < (long)this->transactionHistory->size(); i++){
 
-        output<< i + 1 ;
+        output<< i + 1  << ". ";
         output << *this->transactionHistory->at(i) << endl;
 
     }

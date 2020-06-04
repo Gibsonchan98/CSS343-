@@ -19,12 +19,19 @@
 
 using namespace std;
 
-
+//--------------------------- Deafult Constructor -----------------------------
+// Default constructor. Creates a default SportsCard
+// Preconditions:  None
+// Postconditions: SportsCard is constructed with default values.
 SportsCard::SportsCard() : Collectible() {
     this->manufacturer = "";
     this->grade = "";
 }
 
+//--------------------------- Constructor -----------------------------
+// Constructs a SportsCard with the parameter values
+// Preconditions:  None
+// Postconditions: SportsCard is created with inputed values
 SportsCard::SportsCard(int year, string name, int amount, char type, string manu, string grade)
             : Collectible(year,name,amount,type){
 
@@ -32,8 +39,16 @@ SportsCard::SportsCard(int year, string name, int amount, char type, string manu
         this->grade = grade;
 }
 
+//--------------------------- Destructor ----------------------------
+// Deallocates all used memory
+// Preconditions:  None
+// Postconditions: All memory is deallocated
 SportsCard::~SportsCard() {}
 
+//--------------------------- create ----------------------------
+// Creates a SportsCard object
+// Preconditions:  input is in correct format and valid
+// Postconditions: returns new SportsCard object constructed with input values.
 SportsCard* SportsCard::create(ifstream &input) const {
 
     char type;
@@ -63,6 +78,10 @@ SportsCard* SportsCard::create(ifstream &input) const {
 
 }
 
+//--------------------------- clone --------------------------------------
+// Creates a clone of SportsCard object
+// Preconditions:  none
+// Postconditions: returns a pointer to the clone of the SportsCard Object
 SportsCard* SportsCard::clone() const {
 
     return new SportsCard(getYear(), getName(),getAmount(),
@@ -70,6 +89,10 @@ SportsCard* SportsCard::clone() const {
 
 }
 
+//-------------------------------- == ---------------------------------------
+// Equal operator overload. Compares two SportsCard objects equality
+// Preconditions:  They must have comparable attributes
+// Postconditions: Returns true if they're equal
 bool SportsCard::operator==(const Inventory &other) const {
 
     const SportsCard& card = dynamic_cast<const SportsCard&>(other);
@@ -83,6 +106,10 @@ bool SportsCard::operator==(const Inventory &other) const {
 
 }
 
+//-------------------------------- != ---------------------------------------
+// Unequal operator overload. Compares two SportsCard objects equality
+// Preconditions:  They must have comparable attributes
+// Postconditions: Returns true if they're not equal
 bool SportsCard::operator!=(const Inventory &other) const {
 
     const SportsCard& card = dynamic_cast<const SportsCard&>(other);
@@ -91,6 +118,11 @@ bool SportsCard::operator!=(const Inventory &other) const {
 
 }
 
+//-------------------------------- > ---------------------------------------
+// Greater than operator overload. Compares if this SportsCard is greater
+// than the other.
+// Preconditions:  They must have comparable attributes
+// Postconditions: Returns true if this is greater than the other
 bool SportsCard::operator>(const Inventory &other) const {
 
     const SportsCard& card = dynamic_cast<const SportsCard&>(other);
@@ -104,20 +136,32 @@ bool SportsCard::operator>(const Inventory &other) const {
 
 }
 
+//---------------------------------Display --------------------------------
+// Displays SportsCard's information
+// Preconditions:  SportsCard is not empty
+// Postconditions:  SportsCard's information is displayed
 void SportsCard::display(ostream &output) const {
 
     output << "Sports Card: ";
     //call display parent function by parent
     Collectible::display(output);
-    output << "Manufacturer: " << this->manufacturer;
-    output << "Grade: " << this->grade;
+    output << " Manufacturer: " << this->manufacturer;
+    output << " Grade: " << this->grade;
 
 }
 
+//---------------------getGrade--------------------------------------------
+// Returns the grade of this SportsCard.
+// Preconditions: None.
+//Postconditions: Grade is returned.
 string SportsCard::getGrade() const {
     return this->grade;
 }
 
+//--------------------- getManufacturer------------------------------------
+// Returns the manufacturer of this SportsCard.
+// Preconditions: None.
+//Postconditions: value of string manu is returned.
 string SportsCard::getManufacturer()const {
     return this->manufacturer;
 }

@@ -28,6 +28,7 @@
 class SportsCard : public Collectible {
 
 public:
+
     //--------------------------- Deafult Constructor -----------------------------
     // Default constructor. Creates a default SportsCard
     // Preconditions:  None
@@ -55,9 +56,9 @@ public:
     virtual SportsCard* create(ifstream &input) const;
 
     //--------------------------- clone --------------------------------------
-    // Creates a clone of Invetory object
+    // Creates a clone of SportsCard object
     // Preconditions:  none
-    // Postconditions: returns a pointer to the clone of the Inventory Object
+    // Postconditions: returns a pointer to the clone of the SportsCard Object
     virtual SportsCard* clone() const;
 
     //-------------------------------- == ---------------------------------------

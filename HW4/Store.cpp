@@ -19,6 +19,7 @@
 //---------------------------------------------------------------------------
 
 #include "Store.h"
+#include "iomanip"
 
 using namespace std;
 
@@ -62,7 +63,7 @@ Store::Store(){
     this->inventoryList['S' - 'A'] = new SearchTree();
 
     //initialize hastable for customers
-    this->customerList = new Inventory* [MAX_CUSTOMERS];
+    this->customerList = new Inventory*[MAX_CUSTOMERS];
 
     //initialize BST of customers
     this->customers = new SearchTree();
@@ -145,44 +146,6 @@ void Store::buildInventory(ifstream &input){
 
 }
 
-//-------------------------- Sell ----------------------------
-// Sells an item of the store
-// Preconditions:  Store is not empty
-// Postconditions: Collectible is removed from inventory
-void Store::sell() {
-
-    Sell* trans = dynamic_cast<Sell*>(transList->front());
-
-    Collectible* item = trans->getItem();
-    int ID = trans->getCustID();
-    if(item != nullptr){
-
-        int index = item->getType() - 'A';
-
-        if(ID > 0 && ID < MAX_CUSTOMERS){
-
-            SearchTree *tree = inventoryList[index];
-
-            if(tree->remove(*item)){
-                Customer* customer = dynamic_cast<Customer*> (customerList[ID]);
-                customer->addTransaction(trans);
-                customer = nullptr;
-            }
-            else{
-                cout << "ITEM OUT OF STOCK!" << endl;
-                delete trans;
-            }
-        }
-        else{
-            cout << "CUSTOMER DOES NOT EXIST" << endl;
-            delete trans;
-        }
-    }
-    else{
-        delete trans;
-    }
-}
-
 //--------------------------- buildTransactions ----------------------------
 // Builds transaction
 // Preconditions:  file exists and it is opened
@@ -194,8 +157,8 @@ void Store::buildTransactions(ifstream &input) {
         if(input.eof()){
 
             if(trans == nullptr){
-            delete trans;
-            break;
+                delete trans;
+                break;
             }
 
         }
@@ -216,6 +179,50 @@ void Store::buildTransactions(ifstream &input) {
 
 }
 
+//-------------------------- Sell ----------------------------
+// Sells an item of the store
+// Preconditions:  Store is not empty
+// Postconditions: Collectible is removed from inventory
+void Store::sell() {
+
+    Sell* trans = dynamic_cast<Sell*>(transList->front());
+
+    Collectible* item = trans->getItem();
+
+    int ID = trans->getCustID();
+    if(item != nullptr){
+
+        int index = item->getType() - 'A';
+
+        if(ID > 0 && ID < MAX_CUSTOMERS){
+
+            SearchTree *tree = inventoryList[index];
+
+            if(tree->remove(*item)){
+                Customer* customer = dynamic_cast<Customer*> (customerList[ID]);
+                customer->addTransaction(trans);
+                customer = nullptr;
+            }
+            else{
+                cout << "ITEM OUT OF STOCK!" << endl;
+                delete trans;
+            }
+            tree = nullptr;
+        }
+        else{
+            cout << "CUSTOMER DOES NOT EXIST" << endl;
+            delete trans;
+        }
+    }
+    else{
+        delete trans;
+    }
+    trans = nullptr;
+    item = nullptr;
+}
+
+
+
 //--------------------------Buy  ----------------------------------------------
 // Buys an item for the store
 // Preconditions:  Item exists
@@ -224,12 +231,13 @@ void Store::buy() {
     //cast transaction
     Buy* trans = dynamic_cast<Buy*>(transList->front());
     int ID = trans->getCustID();
+
     Inventory* item = trans->getItem()->clone();
 
     if(item != nullptr){
 
         Collectible* collectible = trans->getItem();
-        char index = collectible->getType() - 'A';
+        int index = collectible->getType() - 'A';
         //if able to insert item
 
         if(inventoryList[index]->insert(item)){
@@ -242,13 +250,15 @@ void Store::buy() {
             delete item;
             delete trans;
         }
+        collectible = nullptr;
     }
 
     else{
 
         delete trans;
-
     }
+    trans = nullptr;
+    item = nullptr;
 }
 
 //-------------------------- display ----------------------------
@@ -257,7 +267,7 @@ void Store::buy() {
 // Postconditions: All inventory is displayed
 void Store::display() {
     cout << "_________________________________________________________" << endl;
-    cout << setw(10) << "STORE INVENTORY" << setw(10) << endl;
+    cout << setw(35) << "STORE INVENTORY" << setw(35) << endl;
     cout << "_________________________________________________________" << endl;
     cout << *inventoryList['M'-'A'] << endl;
     cout << *inventoryList['C'-'A'] << endl;
@@ -272,7 +282,7 @@ void Store::customerHistory(int ID) const {
     //if customer exists
     if(customerList[ID] != nullptr){
     cout << "_________________________________________________________" << endl;
-    cout << setw(7) << "CUSTOMER TRANSACTION HISTORY" << setw(7) << endl;
+    cout << setw(43) << "CUSTOMER TRANSACTION HISTORY" << setw(43) << endl;
     cout << "_________________________________________________________" << endl;
     cout << *customerList[ID] << endl << endl;
     }
@@ -287,9 +297,9 @@ void Store::customerHistory(int ID) const {
 // Preconditions:  Store is not empty
 // Postconditions: All store's customers' transaction history  is displayed
 void Store::allHistory() const {
-    cout << "_________________________________________________________" << endl;
-    cout << setw(9) << "STORE TRANSACTION HISTORY" << setw(9) << endl;
-    cout << "_________________________________________________________" << endl;
+    cout << "__________________________________________________________" << endl;
+    cout << setw(43) << "STORE TRANSACTION HISTORY" << setw(43) << endl;
+    cout << "__________________________________________________________" << endl;
     cout << *customers << endl << endl;
 }
 

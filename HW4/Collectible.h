@@ -60,9 +60,9 @@ public:
     virtual Collectible* create(ifstream& input) const = 0;
 
     //--------------------------- clone --------------------------------------
-    // Creates a clone of Invetory object
+    // Creates a clone of Collectible object
     // Preconditions:  none
-    // Postconditions: returns a pointer to the clone of the Inventory Object
+    // Postconditions: returns a pointer to the clone of the Collectible Object
     virtual Collectible* clone() const = 0;
 
 
@@ -72,8 +72,8 @@ public:
     // Postconditions: Returns true if they're equal
     virtual bool operator==(const Inventory& other) const = 0;
 
-    //-------------------------------- == ---------------------------------------
-    // Not equal operator overload. Compares two Inventory objects
+    //-------------------------------- != ---------------------------------------
+    // Not equal operator overload. Compares two Collectible objects
     // Preconditions:  They must have comparable attributes
     // Postconditions: returns true if they're not equal
     virtual bool operator!=(const Inventory& other) const = 0;

@@ -18,19 +18,35 @@
 
 #include "ComicBook.h"
 
+//--------------------------- Deafult Constructor -----------------------------
+// Default constructor. Creates a default ComicBook
+// Preconditions:  None
+// Postconditions: Comicbook is constructed with default values.
 ComicBook::ComicBook() : Collectible() {
     this->grade = "";
     this->publisher = "";
 }
 
+//--------------------------- Constructor -----------------------------
+// Constructs a ComicBook with the parameter values
+// Preconditions:  None
+// Postconditions: ComicBook is created with inputed values
 ComicBook::ComicBook(int year, string name, int amount, char type, string pub, string grade)
     : Collectible(year, name, amount,type){
     this->publisher = pub;
     this->grade = grade;
 }
 
+//--------------------------- Destructor ----------------------------
+// Deallocates all used memory
+// Preconditions:  None
+// Postconditions: All memory is deallocated
 ComicBook::~ComicBook(){}
 
+//--------------------------- create ----------------------------
+// Creates a SportsCard object
+// Preconditions:  input is in correct format and valid
+// Postconditions: returns new SportsCard object constructed with input values.
 ComicBook *ComicBook::create(ifstream& input) const{
     char type;
     int amt, year;
@@ -57,12 +73,20 @@ ComicBook *ComicBook::create(ifstream& input) const{
     return new ComicBook(year, name, amt, type, publisher, strgrade);
 }
 
+//--------------------------- clone --------------------------------------
+// Creates a clone of ComicBook object
+// Preconditions:  none
+// Postconditions: returns a pointer to the clone of the ComicBook Object
 ComicBook* ComicBook::clone() const {
     //int year, string name, int amount, char type, string pub, string grade
     return new ComicBook(getYear(), getName(), getAmount(),
             getType(), getPub(), getGrade());
 }
 
+//-------------------------------- == ---------------------------------------
+// Equal operator overload. Compares two ComicBook objects equality
+// Preconditions:  They must have comparable attributes
+// Postconditions: Returns true if they're equal
 bool ComicBook::operator==(const Inventory& other) const {
 
     const ComicBook& comic = dynamic_cast<const ComicBook&>(other);
@@ -75,6 +99,10 @@ bool ComicBook::operator==(const Inventory& other) const {
            this->getPub() == comic.getPub());
 }
 
+//-------------------------------- != ---------------------------------------
+// Unequal operator overload. Compares two ComicBook objects equality
+// Preconditions:  They must have comparable attributes
+// Postconditions: Returns true if they're not equal
 bool ComicBook::operator!=(const Inventory &other) const {
 
     const ComicBook& comic = dynamic_cast<const ComicBook&>(other);
@@ -82,6 +110,11 @@ bool ComicBook::operator!=(const Inventory &other) const {
     return !(*this == comic);
 }
 
+//-------------------------------- > ---------------------------------------
+// Greater than operator overload. Compares if this ComicBook is greater
+// than the other.
+// Preconditions:  They must have comparable attributes
+// Postconditions: Returns true if this is greater than the other
 bool ComicBook::operator>(const Inventory& other) const {
 
     const ComicBook& comic = dynamic_cast<const ComicBook&>(other);
@@ -94,19 +127,31 @@ bool ComicBook::operator>(const Inventory& other) const {
 
 }
 
+//---------------------------------Display --------------------------------------
+// Displays ComicBook's information
+// Preconditions: ComicBook is not empty
+// Postconditions: ComicBook's information is displayed
 void ComicBook::display(ostream& output) const {
 
     output << "Comicbook: ";
     //call display parent function by parent
     Collectible::display(output);
-    output << "Publisher: " << this->publisher;
+    output << "Publisher: " << this->publisher << " ";
     output << "Grade: " << this->grade;
 }
 
+//---------------------getGrade-------------------------------
+// Returns the grade of this ComicBook.
+// Preconditions: None.
+//Postconditions: value of string grade is returned.
 string ComicBook::getGrade() const {
     return this->grade;
 }
 
+//--------------------- getPub------------------------------
+// Returns the publisher  of this  ComicBook.
+// Preconditions: None.
+//Postconditions: value of string publisher is returned.
 string ComicBook::getPub() const {
     return this->publisher;
 }

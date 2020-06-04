@@ -33,7 +33,7 @@ InventoryDisplay::InventoryDisplay(char type) : Transaction(type){}
 // Deallocates all used memory
 // Preconditions: none
 // Postconditions: All memory is deallocated
-InventoryDisplay::~InventoryDisplay()= default;
+InventoryDisplay::~InventoryDisplay(){}
 
 //-----------------------------  run  ---------------------------------
 // Runs inventoryDisplay function
@@ -55,6 +55,10 @@ InventoryDisplay* InventoryDisplay::create(ifstream& infile) const{
     return new InventoryDisplay(type);
 }
 
+//--------------------------- clone --------------------------------------
+// Creates a clone of InventoryDisplay object
+// Preconditions:  none
+// Postconditions: returns a pointer to the clone of the InventoryDisplay Object
 InventoryDisplay *InventoryDisplay::clone() const {
     return new InventoryDisplay(getType());
 }

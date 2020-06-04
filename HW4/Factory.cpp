@@ -52,6 +52,7 @@ void Factory::insert(char key, Inventory* value ){
     this->map->insert(key, value);
 }
 
+
 //--------------------------- create ----------------------------
 // Creates an derived object of Inventory
 // Preconditions:  input is in correct format and valid
@@ -61,13 +62,15 @@ Inventory* Factory::create(ifstream &input) const{
     //get type from file
     char type = input.peek();
 
-    temp = this->map->retrieve(type);
+    if(isalpha(type)){
+        temp = this->map->retrieve(type);
 
-    if(temp != nullptr){
-        return temp->create(input);
+        if(temp != nullptr){
+            return temp->create(input);
+        }
     }
 
-    input.ignore(INT32_MAX,'\n'); //CHANGE THIS TO INT_MAX
+    input.ignore(INT_MAX,'\n');
     temp = nullptr;
     return nullptr;
 

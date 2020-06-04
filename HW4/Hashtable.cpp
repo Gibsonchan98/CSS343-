@@ -17,10 +17,16 @@
 
 #include "Hashtable.h"
 
+//-------------------- Default Constructor---------------------------
+//Default Constructor creates a hashtable with a default capacity and
+//  initiates array.
+// Preconditions: None.
+// Postconditions: Hashtable is created with the default
+//		   size and initialized
 HashTable::HashTable() {
     arrayHash = new Inventory*[SIZE + 1];
     this->size = SIZE + 1;
-    for(int i = 0; i <= this->size; i++){
+    for(int i = 0; i < this->size; i++){
         arrayHash[i] = nullptr;
     }
 }
@@ -33,8 +39,10 @@ HashTable::~HashTable(){
     delete[] arrayHash;
 }
 
-
-
+//--------------------- insert --------------------------------
+// Saves value at the key in HashTable
+// Preconditions: Key and value are not empty or nullptr
+// Postconditions: The value was added to this hashtable.
 void HashTable::insert(char key, Inventory *value) {
 
     int index = hash(key);
@@ -47,11 +55,15 @@ void HashTable::insert(char key, Inventory *value) {
 
 }
 
+//---------------------resize---------------------------------
+// Enlarges array and resafes data
+// Preconditions: size is bigger than this->size.
+// Postconditions: arrayHash has been increased to size and has
+//      all data safed again
+void HashTable::resize(int num) {
 
-void HashTable::resize(int size) {
-    int tempSize;
-    Inventory **tempArray = new Inventory*[size + 1]();
-    for(int i = 0; i <= size; i++){
+    Inventory **tempArray = new Inventory*[num + 1]();
+    for(int i = 0; i <= num; i++){
         tempArray[i] = nullptr;
     }
     for(int i = 0; i <= this->size; i++){
@@ -60,16 +72,22 @@ void HashTable::resize(int size) {
     //delete data
     delete arrayHash;
     arrayHash = tempArray;
+    this->size = num + 1;
 
-    this->size = size + 1;
-
-    tempArray = nullptr;
 }
 
+//--------------------- hash -------------------------------
+//Creates and returns hash code for the input key.
+// Preonditions: None.
+//Postconditions: An int with hash code is returned
 int HashTable::hash(char key) const {
     return key - 'O';
 }
 
+//---------------------retrieve ---------------------------------
+// Returns pointer Inventory object that is safed at that key
+// Preconditions: Key exists
+// Postconditions: Pointer to value is returned
 Inventory *HashTable::retrieve(char key) const {
     int index = hash(key);
 

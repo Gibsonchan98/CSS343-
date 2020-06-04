@@ -29,7 +29,8 @@ Sell::Sell() : TransactionItem() {}
 // Creates a Sell Transaction with input
 // Preconditions: Input is valid
 // Postconditions: This attributes are initialized with input values
-Sell::Sell(char type, Collectible* item, int custID) : TransactionItem(type,item,custID){}
+Sell::Sell(char type, Collectible* item, int custID)
+        : TransactionItem(type,item,custID){}
 
 //--------------------------- Destructor ----------------------------
 // Deallocates all used memory
@@ -42,7 +43,7 @@ Sell::~Sell(){}
 // Preconditions:  none
 // Postconditions: Sell transaction type is displayed
 void Sell::display(ostream& output) const{
-    output << "Transaction: ";
+    output << "Sell- ";
     TransactionItem::display(output);
 }
 

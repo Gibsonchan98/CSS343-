@@ -33,7 +33,7 @@ public:
     Coin();
 
     //--------------------------- Constructor -----------------------------
-    // Constructs a Coinwith the parameter values
+    // Constructs a Coin with the parameter values
     // Preconditions:  None
     // Postconditions: Coin is created with inputed values
     Coin(int year, string name, int amount, char type, int grade);
@@ -45,31 +45,31 @@ public:
     virtual ~Coin();
 
     //--------------------------- create ----------------------------
-    // Creates a SportsCard object
+    // Creates a Coin object
     // Preconditions:  input is in correct format and valid
-    // Postconditions: returns new SportsCard object constructed with input values.
+    // Postconditions: returns new Coin object constructed with input values.
     virtual Coin* create(ifstream &input) const;
 
     //--------------------------- clone --------------------------------------
-    // Creates a clone of Invetory object
+    // Creates a clone of Coin object
     // Preconditions:  none
-    // Postconditions: returns a pointer to the clone of the Inventory Object
+    // Postconditions: returns a pointer to the clone of the Coin Object
     virtual Coin* clone() const;
 
     //-------------------------------- == ---------------------------------------
-    // Equal operator overload. Compares two SportsCard objects equality
+    // Equal operator overload. Compares two Coin objects equality
     // Preconditions:  They must have comparable attributes
     // Postconditions: Returns true if they're equal
     virtual bool operator==(const Inventory& other) const;
 
     //-------------------------------- > ---------------------------------------
-    // Greater than operator overload. Compares if this SportsCard is greater
+    // Greater than operator overload. Compares if this Coin is greater
     // than the other.
     // Preconditions:  They must have comparable attributes
     // Postconditions: Returns true if this is greater than the other
     virtual bool operator>(const Inventory& other) const;
 
-    //-------------------------------- == ---------------------------------------
+    //-------------------------------- != ---------------------------------------
     // Not equal operator overload. Compares two Coin objects
     // Preconditions:  They must have comparable attributes
     // Postconditions: returns true if they're not equal

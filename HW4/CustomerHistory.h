@@ -67,9 +67,9 @@ public:
     virtual CustomerHistory* create(ifstream& infile) const;
 
     //--------------------------- clone --------------------------------------
-    // Creates a clone of Transaction object
+    // Creates a clone of CustomerHistory object
     // Preconditions:  none
-    // Postconditions: returns a pointer to the clone of the Transaction Object
+    // Postconditions: returns a pointer to the clone of the CustomerHistory Object
     virtual CustomerHistory* clone() const;
 
 
@@ -79,11 +79,6 @@ public:
     // Postconditions: Value of int custID is returned
     int getCustID() const;
 
-    //----------------------------  getItem -------------------------------------
-    // Returns pointer to item
-    // Preconditions: Item is not null
-    // Postconditions: Pointer to Inventory item is returned
-    Collectible* getItem() const;
 
 
 private:
