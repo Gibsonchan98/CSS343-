@@ -49,28 +49,36 @@ ComicBook::~ComicBook(){}
 // Postconditions: returns new SportsCard object constructed with input values.
 ComicBook *ComicBook::create(ifstream& input) const{
     char type;
-    int amt, year;
-    string name, strgrade, publisher;
+    int temp, amt, year;
+    string name, strgrade, pub;
 
     input >> type; //check if right type?
     input.ignore();
     input.ignore();
-    input >> amt;
-    if(amt < 1){ //if it is zero or negative
+    input >> temp;
+    if(temp < 0){ //if it is zero or negative
+       return nullptr;
+    }
+    //see if temp is a year or a count
+    if(temp > 1800){
+        year = temp;
         amt = 0;
     }
-    input.ignore();
-    input.ignore();
-    input >> year;
+    else{
+        amt = temp;
+        input.ignore();
+        input.ignore();
+        input >> year;
+    }
     input.ignore();
     input.ignore();
     getline(input, strgrade, ',');
     input.ignore();
     getline(input, name, ',');
     input.ignore();
-    getline(input, publisher);
+    getline(input, pub);
 
-    return new ComicBook(year, name, amt, type, publisher, strgrade);
+    return new ComicBook(year, name, amt, type, pub, strgrade);
 }
 
 //--------------------------- clone --------------------------------------
@@ -92,7 +100,6 @@ bool ComicBook::operator==(const Inventory& other) const {
     const ComicBook& comic = dynamic_cast<const ComicBook&>(other);
 
     return(this->getName() == comic.getName() &&
-           this->getAmount() == comic.getAmount() &&
            this->getGrade() == comic.getGrade() &&
            this->getType() == comic.getType() &&
            this->getYear() == comic.getYear() &&
@@ -120,7 +127,6 @@ bool ComicBook::operator>(const Inventory& other) const {
     const ComicBook& comic = dynamic_cast<const ComicBook&>(other);
 
     return(this->getName() > comic.getName() ||
-           this->getAmount() > comic.getAmount() ||
            this->getGrade() < comic.getGrade() ||
            this->getType() > comic.getType() ||
            this->getYear() > comic.getYear());
@@ -133,10 +139,10 @@ bool ComicBook::operator>(const Inventory& other) const {
 // Postconditions: ComicBook's information is displayed
 void ComicBook::display(ostream& output) const {
 
-    output << "Comicbook: ";
+    output << "Comicbook(" << this->getAmount() << "): ";
     //call display parent function by parent
     Collectible::display(output);
-    output << "Publisher: " << this->publisher << " ";
+    output << "Publisher: " << this->publisher << " | ";
     output << "Grade: " << this->grade;
 }
 

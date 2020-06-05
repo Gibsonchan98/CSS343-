@@ -1,4 +1,3 @@
-//
 // Store.h
 // Member function definitions for class Store
 // Created by Melanie Palomino on 5/15/20.
@@ -19,7 +18,9 @@
 //---------------------------------------------------------------------------
 
 #include "Store.h"
+#include <string>
 #include "iomanip"
+#include "fstream"
 
 using namespace std;
 
@@ -29,12 +30,15 @@ using namespace std;
 // Postconditions: Store  is constructed with default values.
 Store::Store(){
 
+    this->size = MAX_ITEMS;
+
     //Collectibles hashtable
     this->collectFactory = new Factory();
     //initialize collectibles  hashtable
     this->collectFactory->insert('M', new Coin());
     this->collectFactory->insert('C', new ComicBook());
     this->collectFactory->insert('S', new SportsCard());
+    // collectFactory->display();
 
     //Transaction hashtable
     this->transFactory = new Factory();
@@ -51,7 +55,6 @@ Store::Store(){
         this->inventoryList[i] = nullptr;
     }
 
-    //create class or seperate functions
     //adding types of collectibles to tree
     if(('M' - 'A') > this->size){this->resize('M'-'A');}
     this->inventoryList['M' - 'A'] = new SearchTree();
@@ -62,7 +65,7 @@ Store::Store(){
     if(('S' - 'A') > this->size){this->resize('S'-'A');}
     this->inventoryList['S' - 'A'] = new SearchTree();
 
-    //initialize hastable for customers
+    //initialize hashtable for customers
     this->customerList = new Inventory*[MAX_CUSTOMERS];
 
     //initialize BST of customers
@@ -71,7 +74,7 @@ Store::Store(){
     //initialize queue of transacions
     this->transList = new queue <Inventory*> ();
 
-    this->size = MAX_ITEMS;
+
 }
 
 
@@ -105,8 +108,14 @@ void Store::buildCustomers(ifstream &input) {
 
         int ID = custTemp->getID();
         //add customer
-        this->customers->insert(custTemp);
-        this->customerList[ID] = custTemp;
+        if(ID > 0 && ID < MAX_CUSTOMERS){
+            this->customers->insert(custTemp);
+            this->customerList[ID] = custTemp;
+        }
+        else{
+            delete custTemp;
+            custTemp = nullptr;
+        }
     }
 
 }
@@ -139,7 +148,6 @@ void Store::buildInventory(ifstream &input){
             for(int i = 0; i < amt; i++){
                 inventoryList[index]->insert(item);
             }
-
         }
 
     }
@@ -147,12 +155,15 @@ void Store::buildInventory(ifstream &input){
 }
 
 //--------------------------- buildTransactions ----------------------------
-// Builds transaction
+// Builds transaction queue
 // Preconditions:  file exists and it is opened
 // Postconditions: File is read and transactions are read and processed
-void Store::buildTransactions(ifstream &input) {
+void Store::buildTransactions(string inputName) {
+    ifstream input(inputName);
     for(;;){
+
         Inventory* trans = transFactory->create(input);
+
         //if at end of the file
         if(input.eof()){
 
@@ -246,6 +257,7 @@ void Store::buy() {
             customer = nullptr;
         }
         else{
+            cout << *item << endl;
             cout << "COULD NOT BUY COLLECTIBLE" << endl;
             delete item;
             delete trans;
@@ -266,9 +278,11 @@ void Store::buy() {
 // Preconditions:  Store is not empty
 // Postconditions: All inventory is displayed
 void Store::display() {
-    cout << "_________________________________________________________" << endl;
-    cout << setw(35) << "STORE INVENTORY" << setw(35) << endl;
-    cout << "_________________________________________________________" << endl;
+    cout << "__________________________________________";
+    cout << "__________________________________________" << endl;
+    cout << setw(45) << "STORE INVENTORY" << setw(40) << endl;
+    cout << "__________________________________________";
+    cout << "__________________________________________" << endl;
     cout << *inventoryList['M'-'A'] << endl;
     cout << *inventoryList['C'-'A'] << endl;
     cout << *inventoryList['S'-'A'] << endl;
@@ -281,10 +295,10 @@ void Store::display() {
 void Store::customerHistory(int ID) const {
     //if customer exists
     if(customerList[ID] != nullptr){
-    cout << "_________________________________________________________" << endl;
-    cout << setw(43) << "CUSTOMER TRANSACTION HISTORY" << setw(43) << endl;
-    cout << "_________________________________________________________" << endl;
-    cout << *customerList[ID] << endl << endl;
+        cout << "_________________________________________________________" << endl;
+        cout << setw(43) << "CUSTOMER TRANSACTION HISTORY" << setw(43) << endl;
+        cout << "_________________________________________________________" << endl;
+        cout << *customerList[ID] << endl << endl;
     }
     else{
         cout << "CUSTOMER " << ID <<  " DOES NOT EXIST" << endl;
@@ -310,10 +324,10 @@ void Store::allHistory() const {
 // Postconditions: All inventroy is displayed
 void Store::resize(int num) {
 
-   SearchTree** temp = new SearchTree*[num + 1];
+    SearchTree** temp = new SearchTree*[num +1];
 
-   //initialize to avoid issues in VS
-   for(int i = 0; i <= num; i++){
+    //initialize to avoid issues in VS
+    for(int i = 0; i <= num; i++){
         temp[i] = nullptr;
     }
 
@@ -341,11 +355,3 @@ void Store::processTransactions() {
         transList->pop();
     }
 }
-
-
-
-
-
-
-
-

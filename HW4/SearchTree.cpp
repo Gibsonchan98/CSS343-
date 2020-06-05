@@ -185,7 +185,7 @@ bool SearchTree::insertHelper(Node *curr, Inventory *newItem) {
     //base case for addition
     if(*curr->dataPtr == *newItem){
         curr->frequency++;
-        return false;
+        return true;
     }
 
     if(*newItem > *curr->dataPtr){
@@ -471,8 +471,7 @@ int SearchTree::getCountRecursive(const Inventory& item, const Node* curr) const
 void SearchTree::displayHelper(ostream &output,Node *curr) const {
     if(curr != nullptr){
         displayHelper(output,curr->leftPtr);
-        output << *curr->dataPtr << " " << "Amount: ";
-        output << curr->frequency << endl;
+        output << *curr->dataPtr << endl;
         displayHelper(output,curr->rightPtr);
     }
 }

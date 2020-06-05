@@ -44,10 +44,9 @@ HashTable::~HashTable(){
 // Preconditions: Key and value are not empty or nullptr
 // Postconditions: The value was added to this hashtable.
 void HashTable::insert(char key, Inventory *value) {
-
     int index = hash(key);
 
-    if(index > this->size){
+    while(index > this->size){
         resize(index);
     }
 
@@ -62,7 +61,7 @@ void HashTable::insert(char key, Inventory *value) {
 //      all data safed again
 void HashTable::resize(int num) {
 
-    Inventory **tempArray = new Inventory*[num + 1]();
+    Inventory **tempArray = new Inventory*[num * 2]();
     for(int i = 0; i <= num; i++){
         tempArray[i] = nullptr;
     }
@@ -72,7 +71,7 @@ void HashTable::resize(int num) {
     //delete data
     delete arrayHash;
     arrayHash = tempArray;
-    this->size = num + 1;
+    this->size = num * 2;
 
 }
 
@@ -81,7 +80,7 @@ void HashTable::resize(int num) {
 // Preonditions: None.
 //Postconditions: An int with hash code is returned
 int HashTable::hash(char key) const {
-    return key - 'O';
+    return key % this->size;
 }
 
 //---------------------retrieve ---------------------------------

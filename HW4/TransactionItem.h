@@ -18,8 +18,9 @@
 #ifndef TRANSACTIONITEM_H
 #define TRANSACTIONITEM_H
 
-#include "Transaction.h"
 #include "Collectible.h"
+#include "Transaction.h"
+
 
 
 class TransactionItem : public Transaction {

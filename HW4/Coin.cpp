@@ -44,7 +44,7 @@ Coin::Coin(int year, string name, int amount, char type, int grade)
 // Deallocates all used memory
 // Preconditions:  None
 // Postconditions: All memory is deallocated
-Coin::~Coin(){}
+Coin::~Coin() = default;
 
 //--------------------------- create ----------------------------
 // Creates a Coin object
@@ -52,19 +52,28 @@ Coin::~Coin(){}
 // Postconditions: returns new Coin object constructed with input values.
 Coin* Coin::create(ifstream& input) const {
     char type;
-    int amt, year, g;
+    int temp, amt, year, g;
     string name;
 
     input >> type;
     input.ignore();
     input.ignore();
-    input >> amt;
-    if(amt < 1){ //if it is zero or negative
+
+    input >> temp;
+    if(temp < 0){ //if it is zero or negative
+        return nullptr;
+    }
+    //see if temp is a year or a count
+    if(temp > 1800){
+        year = temp;
         amt = 0;
     }
-    input.ignore();
-    input.ignore();
-    input >> year;
+    else{
+        amt = temp;
+        input.ignore();
+        input.ignore();
+        input >> year;
+    }
     input.ignore();
     input.ignore();
     input >> g;
@@ -91,9 +100,9 @@ Coin* Coin::clone() const {
 // Preconditions: Coin is not empty
 // Postconditions: Coin's information is displayed
 void Coin::display(ostream &output) const {
-    output << "Coin : ";
+    output << "Coin(" << this->getAmount() << "): ";
     Collectible::display(output);
-    output << "Grade: " << this->grade ;
+    output << "Grade: " << getGrade();
 }
 
 //-------------------------------- == ---------------------------------------
@@ -105,7 +114,6 @@ bool Coin::operator==(const Inventory& other) const {
     const Coin& coin = dynamic_cast<const Coin&>(other);
 
     return(this->getName() == coin.getName() &&
-            this->getAmount() == coin.getAmount() &&
             this->getGrade() == coin.getGrade() &&
             this->getType() == coin.getType() &&
             this->getYear() == coin.getYear());
@@ -134,7 +142,6 @@ bool Coin::operator>(const Inventory& other) const {
     const Coin& coin = dynamic_cast<const Coin&>(other);
 
     return(this->getName() > coin.getName() ||
-           this->getAmount() > coin.getAmount() ||
            this->getGrade() < coin.getGrade() || //A is better than B
            this->getType() > coin.getType() ||
            this->getYear() > coin.getYear());

@@ -43,7 +43,7 @@ Sell::~Sell(){}
 // Preconditions:  none
 // Postconditions: Sell transaction type is displayed
 void Sell::display(ostream& output) const{
-    output << "Sell- ";
+    output << "Sell(";
     TransactionItem::display(output);
 }
 

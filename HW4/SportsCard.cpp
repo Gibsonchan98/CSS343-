@@ -52,29 +52,37 @@ SportsCard::~SportsCard() {}
 SportsCard* SportsCard::create(ifstream &input) const {
 
     char type;
-    int amt, year;
-    string name, state, manufacturer;
+    int temp, amt, year;
+    string name, state, manu;
 
     input >> type; //check if right type?
     input.ignore();
     input.ignore();
-    input >> amt;
-    if(amt < 1){ //if it is zero or negative
+    input >> temp;
+    if(temp < 0){ //if it is zero or negative
+        return nullptr;
+    }
+    //see if temp is a year or a count
+    if(temp > 1800){
+        year = temp;
         amt = 0;
     }
-    input.ignore();
-    input.ignore();
-    input >> year;
+    else{
+        amt = temp;
+        input.ignore();
+        input.ignore();
+        input >> year;
+    }
     input.ignore();
     input.ignore();
     getline(input, state, ',');
     input.ignore();
     getline(input, name, ',');
     input.ignore();
-    getline(input, manufacturer);
+    getline(input, manu);
 
     //int year, string name, int amount, char type, string manu, string grade
-    return new SportsCard(year, name, amt, type,manufacturer, state);
+    return new SportsCard(year, name, amt, type,manu, state);
 
 }
 
@@ -98,7 +106,6 @@ bool SportsCard::operator==(const Inventory &other) const {
     const SportsCard& card = dynamic_cast<const SportsCard&>(other);
 
     return(this->getName() == card.getName() &&
-           this->getAmount() == card.getAmount() &&
            this->getGrade() == card.getGrade() &&
            this->getType() == card.getType() &&
            this->getYear() == card.getYear() &&
@@ -127,11 +134,10 @@ bool SportsCard::operator>(const Inventory &other) const {
 
     const SportsCard& card = dynamic_cast<const SportsCard&>(other);
 
-    return(this->getName() > card.getName() &&
-           this->getAmount() > card.getAmount() &&
-           this->getGrade() < card.getGrade() &&
-           this->getType() > card.getType() &&
-           this->getYear() > card.getYear() &&
+    return(this->getName() > card.getName() ||
+           this->getGrade() < card.getGrade() ||
+           this->getType() > card.getType() ||
+           this->getYear() > card.getYear() ||
            this->getManufacturer() > card.getManufacturer());
 
 }
@@ -142,10 +148,10 @@ bool SportsCard::operator>(const Inventory &other) const {
 // Postconditions:  SportsCard's information is displayed
 void SportsCard::display(ostream &output) const {
 
-    output << "Sports Card: ";
+    output << "Sports Card(" << this->getAmount() << "): ";
     //call display parent function by parent
     Collectible::display(output);
-    output << " Manufacturer: " << this->manufacturer;
+    output << " Manufacturer: " << this->manufacturer << " | ";
     output << " Grade: " << this->grade;
 
 }

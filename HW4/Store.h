@@ -41,8 +41,9 @@
 #include "CustomerHistory.h"
 
 
-
 using namespace std;
+
+class Transaction;
 
 class Store {
 
@@ -54,12 +55,14 @@ public:
     // Postconditions: Store  is constructed with default values.
     Store();
 
-  /*  //--------------------------- Copy Constructor -----------------------------
-    // Copys all values of other store
-    // Preconditions:  Other is not empty
-    // Postconditions: Store  is constructed with other's values
-    Store(const Store& other);
-    //set all values the same*/
+
+
+    /*  //--------------------------- Copy Constructor -----------------------------
+      // Copys all values of other store
+      // Preconditions:  Other is not empty
+      // Postconditions: Store  is constructed with other's values
+      Store(const Store& other);
+      //set all values the same*/
 
     //--------------------------- Destructor ----------------------------
     // Deallocates all used memory
@@ -83,7 +86,7 @@ public:
     // Builds transaction
     // Preconditions:  file exists and it is opened
     // Postconditions: File is read and transactions are read and processed
-    void buildTransactions(ifstream& file);
+    void buildTransactions(string file);
 
     //--------------------------- processTransactions ----------------------------
     // Process transactions
@@ -150,6 +153,7 @@ private:
 
     //max amount of items
     const static int MAX_ITEMS = 26;
+
 
     //-------------------------- resize ----------------------------
     // Resize hashtable

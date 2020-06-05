@@ -46,7 +46,7 @@ Transaction::~Transaction(){}
 // Preconditions:  none
 // Postconditions: Transaction type is displayed
 void Transaction::display(ostream &output) const {
-    output << this->transactionType;
+    output << this->getType() << ") -- ";
 }
 
 //************************ Operators *****************************************

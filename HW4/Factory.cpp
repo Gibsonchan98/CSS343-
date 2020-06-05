@@ -73,5 +73,10 @@ Inventory* Factory::create(ifstream &input) const{
     input.ignore(INT_MAX,'\n');
     temp = nullptr;
     return nullptr;
+}
 
+void Factory::display() {
+    cout << *map->retrieve('M');
+    cout << *map->retrieve('C');
+    cout << *map->retrieve('S');
 }

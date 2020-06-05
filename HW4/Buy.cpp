@@ -44,7 +44,7 @@ Buy::~Buy(){}
 // Preconditions:  none
 // Postconditions: Buy transaction type is displayed
 void Buy::display(ostream& output) const{
-    output << "Transaction: ";
+    output << "Buy(";
     TransactionItem::display(output);
 }
 

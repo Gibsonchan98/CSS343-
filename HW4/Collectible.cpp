@@ -34,7 +34,7 @@ Collectible::Collectible() : Inventory(){
     this->year = 0;
 }
 
-/--------------------------- Constructor -----------------------------
+//--------------------------- Constructor -----------------------------
 // Constructs a Collectible with the parameter values
 // Preconditions:  None
 // Postconditions: Collectible is created with inputed values
@@ -58,7 +58,7 @@ Collectible::~Collectible(){}
 // Postconditions: Collectible's information is displayed
 void Collectible::display(ostream& output) const {
    //output << this->type << setw(3);
-    output << this->name << "--" << this->year << " ";
+    output << this->name << "-" << this->year << " | ";
 }
 
 //---------------------getType-------------------------------
