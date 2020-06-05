@@ -86,8 +86,9 @@ Store::~Store(){
     delete collectFactory;
     delete transFactory;
     delete customers;
-    delete inventoryList;
-    delete customerList;
+    delete[] inventoryList;
+    delete[] customerList;
+    delete transList;
 }
 
 //---------------------------buildCustomer ----------------------------
@@ -158,8 +159,8 @@ void Store::buildInventory(ifstream &input){
 // Builds transaction queue
 // Preconditions:  file exists and it is opened
 // Postconditions: File is read and transactions are read and processed
-void Store::buildTransactions(string inputName) {
-    ifstream input(inputName);
+void Store::buildTransactions(ifstream& input) {
+    //ifstream input(inputName);
     for(;;){
 
         Inventory* trans = transFactory->create(input);
@@ -212,7 +213,7 @@ void Store::sell() {
             if(tree->remove(*item)){
                 Customer* customer = dynamic_cast<Customer*> (customerList[ID]);
                 customer->addTransaction(trans);
-                customer = nullptr;
+
             }
             else{
                 cout << "ITEM OUT OF STOCK!" << endl;
@@ -228,8 +229,7 @@ void Store::sell() {
     else{
         delete trans;
     }
-    trans = nullptr;
-    item = nullptr;
+
 }
 
 

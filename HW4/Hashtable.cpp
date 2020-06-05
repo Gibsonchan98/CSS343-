@@ -36,6 +36,9 @@ HashTable::HashTable() {
 // Preconditions:  None
 // Postconditions: All memory is deallocated
 HashTable::~HashTable(){
+    for(int i = 0; i < this->size; i++){
+        delete arrayHash[i];
+    }
     delete[] arrayHash;
 }
 

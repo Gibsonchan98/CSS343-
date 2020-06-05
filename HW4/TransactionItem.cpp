@@ -45,6 +45,7 @@ TransactionItem::TransactionItem(char type, Collectible* item, int ID)
 // Postconditions: All memory is deallocated
 TransactionItem::~TransactionItem(){
     delete this->item;
+    this->item = nullptr;
 }
 
 //---------------------------------Display --------------------------------------

@@ -41,7 +41,7 @@ ComicBook::ComicBook(int year, string name, int amount, char type, string pub, s
 // Deallocates all used memory
 // Preconditions:  None
 // Postconditions: All memory is deallocated
-ComicBook::~ComicBook(){}
+ComicBook::~ComicBook()= default;
 
 //--------------------------- create ----------------------------
 // Creates a SportsCard object

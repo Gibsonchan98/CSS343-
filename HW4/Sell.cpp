@@ -36,7 +36,7 @@ Sell::Sell(char type, Collectible* item, int custID)
 // Deallocates all used memory
 // Preconditions: none
 // Postconditions: All memory is deallocated
-Sell::~Sell(){}
+Sell::~Sell() = default;
 
 //---------------------------------Display --------------------------------------
 // Displays Sell transaction info

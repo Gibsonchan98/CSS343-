@@ -86,7 +86,7 @@ public:
     // Builds transaction
     // Preconditions:  file exists and it is opened
     // Postconditions: File is read and transactions are read and processed
-    void buildTransactions(string file);
+    void buildTransactions(ifstream& input);
 
     //--------------------------- processTransactions ----------------------------
     // Process transactions

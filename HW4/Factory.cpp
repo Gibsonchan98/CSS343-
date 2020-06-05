@@ -37,8 +37,11 @@ Factory::Factory(){
 Factory::~Factory(){
 
     delete this->map;
-
+    for(auto & i : *list){
+        delete i;
+    }
     delete this->list;
+
 }
 
 //--------------------------- add ----------------------------

@@ -24,7 +24,7 @@ int main() {
      //store.display();
      store.buildCustomers(infile3);
      //store.allHistory();
-     store.buildTransactions(file);
+     store.buildTransactions(infile2);
    //  store.allHistory();
      store.processTransactions();
 
